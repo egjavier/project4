@@ -1,0 +1,23 @@
+/* tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* colors
+
+lightBlue: #297EA6
+darkBlue: #297EA6
+white: #ffffff
+
+*/
+
+/* remove arrow on input type number */
+@layer base {
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number'] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+  }
+}
