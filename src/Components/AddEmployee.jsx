@@ -1,24 +1,44 @@
 import { Accordion, AccordionHeader, AccordionBody, AccordionList } from "@tremor/react";
+import { useEffect, useState } from "react";
 
 function AddEmployee() {
+
+  const [ isBtnDisabled, setisBtnDisabled ] = useState(false)
+  const [ password, setPassword ] = useState('')
+
+  // disable generate password buttona nd style it
+  const disabledBtn = () => {
+    setisBtnDisabled(true)
+  }
+  // generate random Password
+    let char = 'qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM'
+    let pw=''
+    for(let i = 0; i < 8; i++) {
+      let index = Math.floor(Math.random() * char.length)
+      pw += char.charAt(index)
+    }
+    useEffect(() => {
+      setPassword(pw)
+    }, [])
   return (
-    <form className="p-5 text-[#297EA6]">
-      <AccordionList className="max-w-[1000px] mx-auto">
+    <div className="p-5 text-[#297EA6]">
+      <AccordionList className="max-w-[1000px] mx-auto ">
         <Accordion className="border-none">
           <AccordionHeader className="bg-white">
-            <p className="text-[#297EA6] font-bold">
+            <p className="text-[#297EA6] font-bold md:text-lg">
               Add Employee           
             </p>
           </AccordionHeader>
-          <AccordionBody className="bg-white">
+          <AccordionBody className="bg-white duration-150">
             <hr />
-            <div className="p-5 flex flex-col gap-5 ">
+            <form className="p-5 flex flex-col gap-5 ">
               {/* upload image */}
               <div>
                   <label htmlFor="profileImage" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6]">Image: </label>
                   <input  name="profileImage" id="profileImage" 
                           type="file" 
                           placeholder="Doe"
+                          // required
                           className="placeholder:italic placeholder:indent-2 
                                     border outline-neutral-700 rounded-sm
                                     text-xs md:text-sm indent-2 text-[#297EA6] py-1"
@@ -34,7 +54,7 @@ function AddEmployee() {
                           required
                           className="placeholder:italic placeholder:indent-2 
                                     border outline-neutral-700 rounded-sm
-                                    text-xs md:text-sm indent-2 text-[#297EA6] py-1"
+                                    text-xs md:text-sm indent-2  py-1"
                   />                
                 </div>
                 <div>
@@ -45,7 +65,7 @@ function AddEmployee() {
                           required
                           className="placeholder:italic placeholder:indent-2 
                                     border outline-neutral-700 rounded-sm
-                                    text-xs md:text-sm indent-2 text-[#297EA6] py-1"
+                                    text-xs md:text-sm indent-2 py-1"
                   />                
                 </div>
               </div>
@@ -59,7 +79,7 @@ function AddEmployee() {
                         required
                         className="placeholder:italic placeholder:indent-2 
                                   border outline-neutral-700 rounded-sm
-                                  text-xs md:text-sm indent-2 text-[#297EA6] py-1"
+                                  text-xs md:text-sm indent-2 py-1"
                 />                
                 </div>
                 <div>
@@ -70,7 +90,7 @@ function AddEmployee() {
                           required
                           className="placeholder:italic placeholder:indent-2 
                                     border outline-neutral-700 rounded-sm
-                                    text-xs md:text-sm indent-2 text-[#297EA6] py-1"
+                                    text-xs md:text-sm indent-2 py-1"
                   />                
                 </div>
               </div>
@@ -84,21 +104,18 @@ function AddEmployee() {
                         required
                         className="placeholder:italic placeholder:indent-2 
                                   border outline-neutral-700 rounded-sm
-                                  text-xs md:text-sm indent-2 text-[#297EA6] py-1"
+                                  text-xs md:text-sm indent-2 py-1"
                 />                
                 </div>
                 <div>
                   <label htmlFor="phone" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6] ">Phone:</label>
-                  {/* maxlength is not working on input type number used type text instead and add a pattern */}
                   <input  name="phone" id="phone" 
-                          type="text" 
-                          pattern="[0-9]{10}"
-                          maxLength="18"
+                          type="number" 
                           placeholder="0987654321"
                           required
                           className="placeholder:italic placeholder:indent-2 
                                     border outline-neutral-700 rounded-sm
-                                    text-xs md:text-sm indent-2 text-[#297EA6] py-1"
+                                    text-xs md:text-sm indent-2 py-1"
                   />
                 </div>
               </div>
@@ -129,28 +146,39 @@ function AddEmployee() {
               </div>  
               {/* Generate password*/}
               <div className="flex justify-start items-center gap-5">
-                <button className="border border-[#297EA6] rounded-md px-5 py-1
-                                    hover:scale-105 duration-150
-                                    text-[#297EA6] text-xs md:text-sm ">
+                <button type="submit"
+                        className={
+                          !isBtnDisabled  ? `border border-[#297EA6] rounded-md px-3 py-1
+                                             hover:scale-105 duration-150
+                                            text-[#297EA6] text-xs md:text-sm`
+                                          : `border border-[#999999] rounded-md px-3 py-1
+                                             bg-[#cccccc] text-[#666666] text-xs md:text-sm`
+                        }
+                        disabled = {isBtnDisabled }
+                        onClick = {disabledBtn}>
                   Generate Password
                 </button>
-                <p className="hidden italic text-[#297EA6] text-sm md:text-base font-black">Password</p>
+                {
+                  !isBtnDisabled ? <p className="hidden"></p>
+                                  : <p className="block italic text-sm md:text-base font-semibold">{password}</p>
+                }
               </div>  
               {/* submit button*/}
               <div className="text-end">
-                <button className="bg-[#297EA6] rounded-md px-5 py-2
+                <button className="bg-[#00101C] rounded-md px-5 py-1
                                     hover:scale-105 duration-150
-                                    text-white text-sm md:text-lg ">
+                                    text-white md:text-md ">
                   Submit
                 </button>
               </div>                   
 
-            </div>
+            </form>
           </AccordionBody>
         </Accordion>
       </AccordionList>
-    </form>
+    </div>
   )
 }
+
 
 export default AddEmployee
