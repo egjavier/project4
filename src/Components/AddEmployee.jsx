@@ -1,12 +1,62 @@
 import { Accordion, AccordionHeader, AccordionBody, AccordionList } from "@tremor/react";
 import { useEffect, useState } from "react";
+import db from "./FirebaseConfig"
+import { addDoc, collection } from "firebase/firestore";
 
-function AddEmployee() {
+
+function AddEmployee({employee, setEmployee, readData}) {
+  
+// NEW EMPLOYEE STATES
+  const [ lastname, setLastname ] = useState("")
+  const [ firstname, setFirstname ] = useState("")
+  const [ jobTitle, setJobTitle ] = useState("")
+  const [ department, setDepartment ] = useState("")
+  const [ email, setEmail ] = useState("")
+  const [ phone, setPhone ] = useState(0)
+  const [ employmentStatus, setEmploymentStatus ] = useState("")
+  const [ hireDate, setHireDate ] = useState("")
 
   const [ isBtnDisabled, setisBtnDisabled ] = useState(false)
   const [ password, setPassword ] = useState('')
 
-  // disable generate password buttona nd style it
+// ADD NEW EMPLOYEE USING A FORM
+const handleSubmit =  async () => {
+  const newEmployee = {
+    lastname,
+    firstname,
+    jobTitle,
+    department,
+    email,
+    phone,
+    employmentStatus,
+    hireDate
+  }
+  employee.push(newEmployee)
+  console.log(employee)
+
+  try{
+    await addDoc(collection(db, "employeelist"), {
+      ...newEmployee
+    });
+  } catch (err) {
+    console.error(err)
+  }
+
+  setEmployee(employee)
+
+  setLastname("")
+  setFirstname("")
+  setEmail("")
+  setPhone("")
+  setJobTitle("")
+  setDepartment("")
+  setHireDate("")
+  setEmploymentStatus("")
+
+  readData()
+}
+
+// DISABLE AND STYLE GENERATE PASSWORD BUTTON
   const disabledBtn = () => {
     setisBtnDisabled(true)
   }
@@ -20,25 +70,27 @@ function AddEmployee() {
     useEffect(() => {
       setPassword(pw)
     }, [])
+
   return (
-    <div className="p-5 text-[#297EA6]">
-      <AccordionList className="max-w-[1000px] mx-auto ">
+    <div className="accordion p-5 text-[#297EA6]">
+      <AccordionList className="max-w-[1000px] mx-auto">
         <Accordion className="border-none">
           <AccordionHeader className="bg-white">
             <p className="text-[#297EA6] font-bold md:text-lg">
               Add Employee           
             </p>
           </AccordionHeader>
-          <AccordionBody className="bg-white duration-150">
+          <AccordionBody className="bg-white">
             <hr />
-            <form className="p-5 flex flex-col gap-5 ">
+            <div  
+                    className="p-5 flex flex-col gap-5 duration-300">
               {/* upload image */}
               <div>
                   <label htmlFor="profileImage" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6]">Image: </label>
                   <input  name="profileImage" id="profileImage" 
                           type="file" 
                           placeholder="Doe"
-                          // required
+                          // //required
                           className="placeholder:italic placeholder:indent-2 
                                     border outline-neutral-700 rounded-sm
                                     text-xs md:text-sm indent-2 text-[#297EA6] py-1"
@@ -52,6 +104,8 @@ function AddEmployee() {
                           type="text" 
                           placeholder="Doe"
                           required
+                          value={lastname}
+                          onChange={e => setLastname(e.target.value)}
                           className="placeholder:italic placeholder:indent-2 
                                     border outline-neutral-700 rounded-sm
                                     text-xs md:text-sm indent-2  py-1"
@@ -62,7 +116,9 @@ function AddEmployee() {
                   <input  name="firstname" id="firstname" 
                           type="text" 
                           placeholder="John"
-                          required
+                          //required
+                          value={firstname}
+                          onChange={e => setFirstname(e.target.value)}
                           className="placeholder:italic placeholder:indent-2 
                                     border outline-neutral-700 rounded-sm
                                     text-xs md:text-sm indent-2 py-1"
@@ -76,7 +132,9 @@ function AddEmployee() {
                 <input  name="jobTitle" id="jobTitle" 
                         type="text" 
                         placeholder="Full Stack Developer"
-                        required
+                        //required
+                        value={jobTitle}
+                        onChange={e => setJobTitle(e.target.value)}
                         className="placeholder:italic placeholder:indent-2 
                                   border outline-neutral-700 rounded-sm
                                   text-xs md:text-sm indent-2 py-1"
@@ -87,7 +145,9 @@ function AddEmployee() {
                   <input  name="department" id="department" 
                           type="text" 
                           placeholder="Web Development"
-                          required
+                          //required
+                          value={department}
+                          onChange={e => setDepartment(e.target.value)}
                           className="placeholder:italic placeholder:indent-2 
                                     border outline-neutral-700 rounded-sm
                                     text-xs md:text-sm indent-2 py-1"
@@ -101,7 +161,9 @@ function AddEmployee() {
                 <input  name="email" id="email" 
                         type="email" 
                         placeholder="johndoe@domain.com"
-                        required
+                        //required
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
                         className="placeholder:italic placeholder:indent-2 
                                   border outline-neutral-700 rounded-sm
                                   text-xs md:text-sm indent-2 py-1"
@@ -112,7 +174,9 @@ function AddEmployee() {
                   <input  name="phone" id="phone" 
                           type="number" 
                           placeholder="0987654321"
-                          required
+                          //required
+                          value={phone}
+                          onChange={e => setPhone(Number(e.target.value))}
                           className="placeholder:italic placeholder:indent-2 
                                     border outline-neutral-700 rounded-sm
                                     text-xs md:text-sm indent-2 py-1"
@@ -125,7 +189,9 @@ function AddEmployee() {
                 <label htmlFor="employmentStatus" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6]">Status</label>
                 <select name="employmentStatus" 
                         id="employmentStatus"
-                        required
+                        //required
+                        value={employmentStatus}
+                        onChange={e => setEmploymentStatus(e.target.value)}
                         className="italic border outline-neutral-700 rounded-sm
                         text-xs md:text-sm indent-1 text-neutral-400 py-1" >
                   <option value="fullTime">Full-time</option>
@@ -137,9 +203,11 @@ function AddEmployee() {
                   <label htmlFor="hireDate" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6]">Hire Date:</label>
                   <input  name="hireDate" id="hireDate" 
                           type="date" 
-                          placeholder="Web Development"
-                          required
-                          className="border outline-neutral-700 rounded-sm
+                          placeholder="Nov 17 2020"
+                          //required
+                          value={hireDate}
+                          onChange={e => setHireDate(e.target.value)}
+                          className="border outline-neutral-700 rounded-sm cursor-pointer
                                     text-xs md:text-sm indent-1 text-neutral-400 py-1"
                   />                
                 </div>
@@ -165,14 +233,15 @@ function AddEmployee() {
               </div>  
               {/* submit button*/}
               <div className="text-end">
-                <button className="bg-[#00101C] rounded-md px-5 py-1
+                <button onClick={handleSubmit}
+                        className="bg-[#00101C] rounded-md px-5 py-1
                                     hover:scale-105 duration-150
                                     text-white md:text-md ">
                   Submit
                 </button>
+                
               </div>                   
-
-            </form>
+            </div>
           </AccordionBody>
         </Accordion>
       </AccordionList>

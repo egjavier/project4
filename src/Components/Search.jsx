@@ -8,6 +8,7 @@ function Search() {
       <div className="">
         <div className="flex rounded-s-md">
           <input  type="search" 
+                  name="search"
                   placeholder="Search"
                   className="rounded-s-md indent-1 placeholder:italic p-1
                             text-gray-500 text-sm md:text-base"
