@@ -84,6 +84,8 @@ const handleUpdate = () => {
 
     setIsUpdating(false)
   });
+
+  readData()
 }
 
 console.log()
