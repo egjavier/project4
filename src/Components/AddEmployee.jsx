@@ -68,7 +68,7 @@ const handleSubmit =  async () => {
       }
     
       setEmployee(employee)
-      readData()
+  
     
       setLastname("")
       setFirstname("")
@@ -78,16 +78,18 @@ const handleSubmit =  async () => {
       setDepartment("")
       setHireDate("")
       setEmploymentStatus("")
-         
+
       Swal.fire({
-        title: "Added!",
-        icon: "success",
-        focusConfirm: false,
-        confirmButtonText: `
-        <a href="/">Ok</a>
-        `,
-        allowOutsideClick: false
+          title: "Added!",
+          icon: "success",
+          focusConfirm: false,
+          confirmButtonText: `
+          <a href="/">Ok</a>
+          `,
+          allowOutsideClick: false
       });
+
+      readData()
   }
 }
 
