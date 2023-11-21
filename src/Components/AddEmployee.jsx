@@ -1,10 +1,12 @@
 import { Accordion, AccordionHeader, AccordionBody, AccordionList } from "@tremor/react";
 import { useEffect, useState } from "react";
-import db from "./FirebaseConfig"
-import { addDoc, collection } from "firebase/firestore";
+import db from "./FirebaseConfig";
+import { addDoc, collection} from "firebase/firestore";
+import Swal from 'sweetalert2';
 
 
 function AddEmployee({employee, setEmployee, readData}) {
+
   
 // NEW EMPLOYEE STATES
   const [ lastname, setLastname ] = useState("")
@@ -19,41 +21,73 @@ function AddEmployee({employee, setEmployee, readData}) {
   const [ isBtnDisabled, setisBtnDisabled ] = useState(false)
   const [ password, setPassword ] = useState('')
 
+//MODAL
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'center',
+    iconColor: 'white',
+    customClass: {
+      popup: 'colored-toast',
+    },
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+  }) 
+
 // ADD NEW EMPLOYEE USING A FORM
 const handleSubmit =  async () => {
-  const newEmployee = {
-    lastname,
-    firstname,
-    jobTitle,
-    department,
-    email,
-    phone,
-    employmentStatus,
-    hireDate
+
+  if (!firstname || !lastname || !email || !phone || !jobTitle || !department || !hireDate || !employmentStatus) {
+    await Toast.fire({
+      title: "Missing Fields!",
+      text: 'All fields are required.',
+      icon: "warning",
+      iconColor: "#00101C",
+      color: "#297EA6",
+    }) 
+  } else {  
+      const newEmployee = {
+        lastname,
+        firstname,
+        jobTitle,
+        department,
+        email,
+        phone,
+        employmentStatus,
+        hireDate
+      }
+      employee.push(newEmployee)
+      console.log(employee)
+    
+      try{
+        await addDoc(collection(db, "employeelist"), {
+          ...newEmployee
+        });
+      } catch (err) {
+        console.error(err)
+      }
+    
+      setEmployee(employee)
+    
+      setLastname("")
+      setFirstname("")
+      setEmail("")
+      setPhone("")
+      setJobTitle("")
+      setDepartment("")
+      setHireDate("")
+      setEmploymentStatus("")
+         
+      Swal.fire({
+        title: "Added!",
+        icon: "success",
+        focusConfirm: false,
+        confirmButtonText: `
+        <a href="/">Ok</a>
+        `,
+        allowOutsideClick: false
+      });
   }
-  employee.push(newEmployee)
-  console.log(employee)
-
-  try{
-    await addDoc(collection(db, "employeelist"), {
-      ...newEmployee
-    });
-  } catch (err) {
-    console.error(err)
-  }
-
-  setEmployee(employee)
-
-  setLastname("")
-  setFirstname("")
-  setEmail("")
-  setPhone("")
-  setJobTitle("")
-  setDepartment("")
-  setHireDate("")
-  setEmploymentStatus("")
-
-  readData()
 }
 
 // DISABLE AND STYLE GENERATE PASSWORD BUTTON
@@ -90,7 +124,6 @@ const handleSubmit =  async () => {
                   <input  name="profileImage" id="profileImage" 
                           type="file" 
                           placeholder="Doe"
-                          // //required
                           className="placeholder:italic placeholder:indent-2 
                                     border outline-neutral-700 rounded-sm
                                     text-xs md:text-sm indent-2 text-[#297EA6] py-1"
@@ -103,7 +136,6 @@ const handleSubmit =  async () => {
                   <input  name="lastname" id="lastname" 
                           type="text" 
                           placeholder="Doe"
-                          required
                           value={lastname}
                           onChange={e => setLastname(e.target.value)}
                           className="placeholder:italic placeholder:indent-2 
@@ -116,7 +148,6 @@ const handleSubmit =  async () => {
                   <input  name="firstname" id="firstname" 
                           type="text" 
                           placeholder="John"
-                          //required
                           value={firstname}
                           onChange={e => setFirstname(e.target.value)}
                           className="placeholder:italic placeholder:indent-2 
@@ -132,7 +163,6 @@ const handleSubmit =  async () => {
                 <input  name="jobTitle" id="jobTitle" 
                         type="text" 
                         placeholder="Full Stack Developer"
-                        //required
                         value={jobTitle}
                         onChange={e => setJobTitle(e.target.value)}
                         className="placeholder:italic placeholder:indent-2 
@@ -145,7 +175,6 @@ const handleSubmit =  async () => {
                   <input  name="department" id="department" 
                           type="text" 
                           placeholder="Web Development"
-                          //required
                           value={department}
                           onChange={e => setDepartment(e.target.value)}
                           className="placeholder:italic placeholder:indent-2 
@@ -161,7 +190,6 @@ const handleSubmit =  async () => {
                 <input  name="email" id="email" 
                         type="email" 
                         placeholder="johndoe@domain.com"
-                        //required
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         className="placeholder:italic placeholder:indent-2 
@@ -174,7 +202,6 @@ const handleSubmit =  async () => {
                   <input  name="phone" id="phone" 
                           type="number" 
                           placeholder="0987654321"
-                          //required
                           value={phone}
                           onChange={e => setPhone(Number(e.target.value))}
                           className="placeholder:italic placeholder:indent-2 
@@ -189,14 +216,13 @@ const handleSubmit =  async () => {
                 <label htmlFor="employmentStatus" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6]">Status</label>
                 <select name="employmentStatus" 
                         id="employmentStatus"
-                        //required
                         value={employmentStatus}
                         onChange={e => setEmploymentStatus(e.target.value)}
                         className="italic border outline-neutral-700 rounded-sm
                         text-xs md:text-sm indent-1 text-neutral-400 py-1" >
-                  <option value="fullTime">Full-time</option>
-                  <option value="partTime">Part-time</option>
-                  <option value="internship">Internship</option>
+                  <option value="Full-time">Full-time</option>
+                  <option value="Part-time">Part-time</option>
+                  <option value="Internship">Internship</option>
                 </select>
                 </div>
                 <div>
@@ -204,7 +230,6 @@ const handleSubmit =  async () => {
                   <input  name="hireDate" id="hireDate" 
                           type="date" 
                           placeholder="Nov 17 2020"
-                          //required
                           value={hireDate}
                           onChange={e => setHireDate(e.target.value)}
                           className="border outline-neutral-700 rounded-sm cursor-pointer
