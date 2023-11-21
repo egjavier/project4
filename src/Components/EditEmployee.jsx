@@ -69,6 +69,7 @@ const handleUpdate = () => {
         console.error(err)
       }
 
+      readData()
       setEmployee(employee)
     } else if (result.isDenied) {
       Swal.fire({

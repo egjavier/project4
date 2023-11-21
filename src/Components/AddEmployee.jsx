@@ -68,6 +68,7 @@ const handleSubmit =  async () => {
       }
     
       setEmployee(employee)
+      readData()
     
       setLastname("")
       setFirstname("")
