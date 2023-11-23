@@ -1,4 +1,3 @@
-import { ArrowCircleRightIcon } from '@heroicons/react/solid'
 import { Link } from 'react-router-dom'
 
 function Navbar() {
@@ -7,10 +6,8 @@ function Navbar() {
       <div className="font-bold text-xl md:text-2xl text-white">
         <Link to="/">LOGO</Link>
       </div>
-      <div title='Login'>
-        <ArrowCircleRightIcon className='w-8 md:w-10 text-white border rounded-full border-border p-1 
-                                        cursor-pointer hover:translate-x-2 duration-150'
-                               />
+      <div title='Login' className='text-white text-xs md-text-sm'>
+        LogIn
       </div>
     </nav>
   )

@@ -1,8 +1,7 @@
 import db from "./FirebaseConfig";
 import { useState } from "react";
 import { doc, setDoc } from "firebase/firestore";
-import Swal from 'sweetalert2';
-import { Link } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 function EditEmployee({employee, setEmployee, readData, isEmployee, setIsUpdating}) {
 
@@ -25,14 +24,12 @@ function EditEmployee({employee, setEmployee, readData, isEmployee, setIsUpdatin
       popup: 'colored-toast',
     },
     showConfirmButton: false,
-    timer: 1500,
+    timer: 1300,
     timerProgressBar: true,
   }) 
 
 // UPDATE EMPLOYEE INFO
 const handleUpdate = () => {
-
-
   Swal.fire({
     title: "Do you want to save the changes?",
     showDenyButton: true,
@@ -42,15 +39,12 @@ const handleUpdate = () => {
     allowOutsideClick: false
   }).then((result) => {
     if (result.isConfirmed) {
-      Swal.fire({
-        title: "Updated!",
+      Toast.fire({
         icon: "success",
-        focusConfirm: false,
-        confirmButtonText: `
-        <a href="/">Ok</a>
-        `,
-        allowOutsideClick: false
-      });
+        iconColor: "#297EA6",
+        title: `${firstname} ${lastname}'s data has been updated!`,
+        color: "#297EA6",
+      }) 
 
       const emp = {
         lastname,
@@ -72,24 +66,16 @@ const handleUpdate = () => {
       readData()
       setEmployee(employee)
     } else if (result.isDenied) {
-      Swal.fire({
-        title: "No changes made!",
-        icon: "warning",
-        focusConfirm: false,
-        confirmButtonText: `
-        <a href="/">Ok</a>
-        `,
-        allowOutsideClick: false
-      });
+      Toast.fire({
+        width: '15rem',
+        title: "No Changes Made.",
+        color: "#297EA6",
+      }) 
     }
 
     setIsUpdating(false)
   });
-
-  readData()
 }
-
-console.log()
 
 return (
   <div className="Edit bg-white m-5">

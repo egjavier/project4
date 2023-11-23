@@ -21,3 +21,19 @@ white: #ffffff
     -moz-appearance: textfield !important;
   }
 }
+
+/* sweatalert*/
+.swal2-title {
+  color: #297EA6;
+  width: auto;
+  padding: 1rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* pagination */
+.currentPage {
+  color:#297EA6;
+  font-weight: 700;
+  font-size: 1.3em;
+}

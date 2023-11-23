@@ -1,4 +1,3 @@
-import { SortDescendingIcon, FilterIcon, SearchIcon } from "@heroicons/react/solid"
 
 function Search() {
   return (
@@ -14,16 +13,16 @@ function Search() {
                             text-gray-500 text-sm md:text-base"
           />
           <button className="rounded-e-md bg-white text-[#297EA6] border-s border-[#297EA6]  hover:bg-blue-100">
-          <SearchIcon className="h-5 px-1"/>
+          🔍
           </button>
         </div>
       </div>
       <div className="flex cursor-pointer">
         <p className="me-1" title="Sort">
-          <SortDescendingIcon className="w-5 hover:text-blue-100" />
+          sort
         </p>
         <p title="Filter">
-          <FilterIcon className="w-5 hover:text-blue-100" />
+          flter
         </p>
       </div>
     </div>

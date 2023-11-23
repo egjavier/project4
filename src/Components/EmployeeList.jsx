@@ -2,10 +2,11 @@ import AddEmployee from "./AddEmployee"
 import Search from "./Search"
 import profileImage from '../Images/profilePic.jpg'
 import db from "./FirebaseConfig"
-import { collection, getDocs, doc, deleteDoc, setDoc } from "firebase/firestore"
+import { collection, getDocs, doc, deleteDoc } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import Swal from 'sweetalert2';
 import EditEmployee from "./EditEmployee"
+import Pagination from "./Pagination"
 
 function EmployeeList() {
 
@@ -13,6 +14,12 @@ function EmployeeList() {
 
   const [ isUpdating, setIsUpdating ] = useState(false)
   const [ isEmployee, setIsEmployee ] = useState({})
+
+  const [ currentPage, setCurrentPage ] = useState(0)
+  const [ usersPerPage, setUsersPerPage] = useState(10)
+  const numbersOfUsersSeen = currentPage * usersPerPage
+
+  console.log(employee.slice(numbersOfUsersSeen, numbersOfUsersSeen + usersPerPage))
 
   // READ DATA FROM FIREBASE
   const readData = async () => {
@@ -33,38 +40,34 @@ function EmployeeList() {
       popup: 'colored-toast',
     },
     showConfirmButton: false,
-    timer: 1500,
+    timer: 1300,
     timerProgressBar: true,
   }) 
 
   // DELETE EMPLOYEE
   const deleteEmployee = (id, firstname, lastname) => {
     const param = doc(db, "employeelist", id)
-    Swal.fire({
-      icon: 'question',
-      iconColor: "#00101C",
-      color: "#297EA6",
+    Swal.fire({    
       title: `Are you sure you want to delete ${firstname} ${lastname}'s data?`,
       showConfirmButton: true,
       confirmButtonText: "Delete",
       showDenyButton: true,
       denyButtonText: `No`,
-      confirmButtonColor: "#00101C",
+      confirmButtonColor: "#297EA6",
       allowOutsideClick: false
     }).then((result) => {
       if (result.isConfirmed) {
       deleteDoc(param)
         Toast.fire({
           icon: "success",
-          iconColor: "#00101C",
+          iconColor: "#297EA6",
           title: `${firstname} ${lastname}'s data has been deleted!`,
           color: "#297EA6",
         }) 
         readData()
       } else if (result.isDenied) {
         Toast.fire({
-          icon: "warning",
-          iconColor: "#00101C",
+          width: '15rem',
           title: "No Changes Made.",
           color: "#297EA6",
         }) 
@@ -76,8 +79,7 @@ function EmployeeList() {
     setIsEmployee(toUpdate)
     setIsUpdating(true)
   }
-  console.log(isEmployee)
-   return (
+  return (
     <section className="max-w-[1000px] mx-auto">
       {
         !isUpdating 
@@ -103,21 +105,21 @@ function EmployeeList() {
                 </thead>
                 <tbody>
                   { //  MAP THROUGH THE EMPLOYEE ARRAY OF OBJECTS TO GET DATA
-                    employee.map(e => {
+                    employee.slice(numbersOfUsersSeen, numbersOfUsersSeen + usersPerPage).map(e => {
                       return (
                         <tr key={e.id}
-                            className="text-xs md:text-sm text-white  cursor-pointer even:bg-[#00101C]/60 odd:bg-[#00101C]/70
+                            className="text-xs md:text-sm text-[#f3f3f3]  cursor-pointer even:bg-[#00101C]/60 odd:bg-[#00101C]/70
                                         hover:backdrop-blur-0 hover:bg-[#00101C]/40 duration-300">
                           <td className="py-2 w-14 pl-2">
                             <img src={profileImage} alt='Profile Picture' className="rounded-full w-10 h-10"/>
                           </td>
-                          <td className="text-start px-2 py-1">{e.lastname}, {e.firstname}</td>
+                          <td className="text-start px-2 py-1 tracking-wide">{e.lastname}, {e.firstname}</td>
                           <td className="text-start px-3 py-1">{e.jobTitle}</td>
                           <td className="hidden lg:table-cell text-start px-3 py-1">{e.department}</td>
                           <td className="hidden md:table-cell text-start px-3 py-1">{e.email}</td>
                           <td className="hidden lg:table-cell text-start px-3 py-1">{e.phone}</td>
-                          <td className="table-cell text-center">{e.employmentStatus}</td>
-                          <td className="flex justify-center items-center cursor-pointer h-[55px]">
+                          <td className="table-cell text-center px-3">{e.employmentStatus}</td>
+                          <td className="flex justify-center items-center cursor-pointer h-[55px] px-3">
                             <div  className="me-1 hover:scale-125 duration-150 bg-[#00101C]/70 rounded-full p-1" 
                                   title="Edit"
                                   onClick={() => {
@@ -145,10 +147,16 @@ function EmployeeList() {
                 </tbody>
               </table>
             </div>
+            <Pagination employee={employee} usersPerPage={usersPerPage} setCurrentPage={setCurrentPage} currentPage={{currentPage}}/> 
           </> 
           :
-          <EditEmployee employee={employee} setEmployee={setEmployee} readData={readData} isEmployee={isEmployee} setIsUpdating={setIsUpdating} isUpdating={isUpdating}/>
-
+          <EditEmployee employee={employee} 
+                        setEmployee={setEmployee} 
+                        readData={readData} 
+                        isEmployee={isEmployee} 
+                        setIsUpdating={setIsUpdating} 
+                        isUpdating={isUpdating}
+          />
       }
     </section>
   )
