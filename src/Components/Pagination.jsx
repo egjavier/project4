@@ -12,8 +12,8 @@ function Pagination({employee, usersPerPage, setCurrentPage, currentPage}) {
     <>
     {console.log(usersPerPage)}
       <ReactPaginate
-        className='pagination text-[#297EA6] flex gap-5 justify-center items-center
-                    max-w-[1000px] mx-auto w-4/5 mt-5 border rounded-md bg-white'
+        className='pagination text-[#297EA6] flex gap-5 justify-center items-center 
+                    max-w-[1200px] mx-5 mt-5 border rounded bg-white text-xs md:text-sm p-1'
       // name of the buttons
         previousLabel={'Prev'}
         nextLabel={'Next'}

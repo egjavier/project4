@@ -3,6 +3,9 @@ import EmployeeList from "./Components/EmployeeList"
 import EditEmployee from "./Components/EditEmployee"
 import Layout from "./Components/Layout"
 import NotFound from "./Components/NotFound"
+import Login from "./Components/Login"
+import Register from "./Components/Register"
+import AddEmployee from "./Components/AddEmployee"
 
 function App() {
   return (
@@ -10,8 +13,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<EmployeeList />} />
-          <Route path="addemployee" element={<EditEmployee />} />
+          <Route path="addemployee" element={<AddEmployee />} />
           <Route path="editemployee" element={<EditEmployee />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
