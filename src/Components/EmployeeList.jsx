@@ -1,14 +1,19 @@
 import AddEmployee from "./AddEmployee"
-import Search from "./Search"
 import profileImage from '../Images/profilePic.jpg'
 import db from "./FirebaseConfig"
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import Swal from 'sweetalert2';
 import EditEmployee from "./EditEmployee"
 import Pagination from "./Pagination"
 
 function EmployeeList() {
+
+  const [ isSortingName, setIsSortingName ] = useState(false)
+  const [ isSortingJob, setIsSortingJob ] = useState(false)
+  const [ isSortingDepartment, setIsSortingDepartment ] = useState(false)
+  const [ isSortingStatus, setIsSortingStatus ] = useState(false)
 
   const [ employee, setEmployee ] = useState([])
 
@@ -19,13 +24,13 @@ function EmployeeList() {
   const [ usersPerPage, setUsersPerPage] = useState(10)
   const numbersOfUsersSeen = currentPage * usersPerPage
 
-  console.log(employee.slice(numbersOfUsersSeen, numbersOfUsersSeen + usersPerPage))
+  const navigate = useNavigate();
 
   // READ DATA FROM FIREBASE
   const readData = async () => {
     const querySnapshot = await getDocs(collection(db, "employeelist"))
     const employees = querySnapshot.docs.map( e => ({...e.data(), id: e.id}))
-    setEmployee(employees)
+    setEmployee(employees.sort((a, b) => a.lastname.localeCompare(b.lastname)))
   }
   useEffect (() => {
     readData()
@@ -79,6 +84,43 @@ function EmployeeList() {
     setIsEmployee(toUpdate)
     setIsUpdating(true)
   }
+
+  const sortName = (employee) => {
+    setIsSortingName(!isSortingName)
+    if (isSortingName) {
+      employee.sort((a, b) => a.lastname.localeCompare(b.lastname)); // SORT ALPHABETICAL
+    } else {
+      employee.sort((a, b) => b.lastname.localeCompare(a.lastname)); // SORT ALPHABETICAL
+    }
+  }
+
+  const sortJobTitle = (employee) => {
+    setIsSortingJob(!isSortingJob)
+    if (isSortingJob) {
+      employee.sort((a, b) => a.jobTitle.localeCompare(b.jobTitle)); // SORT ALPHABETICAL
+    } else {
+      employee.sort((a, b) => b.jobTitle.localeCompare(a.jobTitle)); // SORT ALPHABETICAL
+    }
+  }
+
+  const sortDept = (employee) => {
+    setIsSortingDepartment(!isSortingDepartment)
+    if (isSortingDepartment) {
+      employee.sort((a, b) => a.department.localeCompare(b.department)); // SORT ALPHABETICAL
+    } else {
+      employee.sort((a, b) => b.department.localeCompare(a.department)); // SORT ALPHABETICAL
+    }
+  }
+
+  const sortStatus = (employee) => {
+    setIsSortingStatus(!isSortingStatus)
+    if (isSortingStatus) {
+      employee.sort((a, b) => a.employmentStatus.localeCompare(b.employmentStatus)); // SORT ALPHABETICAL
+    } else {
+      employee.sort((a, b) => b.employmentStatus.localeCompare(a.employmentStatus)); // SORT ALPHABETICAL
+    }
+  }
+
   return (
     <section className="max-w-[1000px] mx-auto">
       {
@@ -87,37 +129,65 @@ function EmployeeList() {
           <>
             <AddEmployee employee={employee} setEmployee={setEmployee} readData={readData}/>
             <div className="px-5 text-white">
-              <Search />
               <table className="mt-5 bg-[#297EA6]/70 max-w-[1000px] mx-auto w-full
-                                table-auto rounded-md overflow-hidden">
+                                table-fixed rounded-md overflow-hidden">
                 <thead>
                   <tr className="text-xs md:text-sm text-white/90 bg-[#00101C] rounded-t-md shadow-lg">
                     {/* image placeholder */}
                     <th className="p-5 text-center"></th>
-                    <th className=" text-start px-3 py-1">Name</th>
-                    <th className=" text-start px-3 py-1">Job Title</th>
-                    <th className="hidden lg:table-cell text-start px-3 py-1">Department</th>
+                    <th onClick={() => {sortName(employee)}} 
+                        className="px-3 py-3 cursor-pointer">
+                      <span className="flex justify-between items-center ">
+                        Name
+                      <div className={!isSortingName ? "duration-150" : "rotate-180 duration-150"}>▾</div>
+                      </span>
+                    </th>
+                    <th onClick={() => {sortJobTitle(employee)}} 
+                        className=" px-3 py-3 cursor-pointer">
+                      <span className="flex justify-between">
+                        Job Title
+                        <div className={!isSortingJob ? "duration-150" : "rotate-180 duration-150"}>▾</div>
+                      </span>
+                    </th>
+                    <th onClick={() => {sortDept(employee)}} 
+                        className="hidden lg:table-cell text-start px-3 py-1 cursor-pointer">
+                      <span  className="flex justify-between">
+                        Department
+                      <div className={!isSortingDepartment ? "duration-150" : "rotate-180 duration-150"}>▾</div>
+                      </span>
+                    </th>
                     <th className="hidden md:table-cell text-start px-3 py-1">Email</th>
                     <th className="hidden lg:table-cell text-start px-3 py-1">Phone</th>
-                    <th className="table-cell text-center">Status</th>
+                    <th onClick={() => {sortStatus(employee)}} 
+                        className="text-start px-3 py-1 cursor-pointer">
+                      <span  className="flex justify-between">
+                        Status
+                      <div className={!isSortingStatus ? "duration-150" : "rotate-180 duration-150"}>▾</div>
+                      </span>
+                    </th>
                     <th className="text-center">Update</th>
                   </tr>
                 </thead>
                 <tbody>
                   { //  MAP THROUGH THE EMPLOYEE ARRAY OF OBJECTS TO GET DATA
-                    employee.slice(numbersOfUsersSeen, numbersOfUsersSeen + usersPerPage).map(e => {
+                    employee
+                    .slice(numbersOfUsersSeen, numbersOfUsersSeen + usersPerPage)
+                    .map(e => {
                       return (
                         <tr key={e.id}
+                            onClick={() => {
+                              navigate(`/employeecard/${e.id}`, { replace: true })
+                            }}
                             className="text-xs md:text-sm text-[#f3f3f3]  cursor-pointer even:bg-[#00101C]/60 odd:bg-[#00101C]/70
                                         hover:backdrop-blur-0 hover:bg-[#00101C]/40 duration-300">
                           <td className="py-2 w-14 pl-2">
                             <img src={profileImage} alt='Profile Picture' className="rounded-full w-10 h-10"/>
                           </td>
-                          <td className="text-start px-2 py-1 tracking-wide">{e.lastname}, {e.firstname}</td>
-                          <td className="text-start px-3 py-1">{e.jobTitle}</td>
-                          <td className="hidden lg:table-cell text-start px-3 py-1">{e.department}</td>
-                          <td className="hidden md:table-cell text-start px-3 py-1">{e.email}</td>
-                          <td className="hidden lg:table-cell text-start px-3 py-1">{e.phone}</td>
+                          <td className="text-start px-2 py-1 tracking-wide break-words">{e.lastname}, {e.firstname}</td>
+                          <td className="text-start px-3 py-1 break-words">{e.jobTitle}</td>
+                          <td className="hidden lg:table-cell text-start px-3 py-1 break-words">{e.department}</td>
+                          <td className="hidden md:table-cell text-start px-3 py-1 break-all">{e.email}</td>
+                          <td className="hidden lg:table-cell text-start px-3 py-1 break-all">{e.phone}</td>
                           <td className="table-cell text-center px-3">{e.employmentStatus}</td>
                           <td className="flex justify-center items-center cursor-pointer h-[55px] px-3">
                             <div  className="me-1 hover:scale-125 duration-150 bg-[#00101C]/70 rounded-full p-1" 

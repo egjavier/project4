@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import db from "./FirebaseConfig";
 import { addDoc, collection} from "firebase/firestore";
 import Swal from 'sweetalert2';
 
-
 function AddEmployee({employee, setEmployee, readData}) {
 
-  
+  const [ image, setImage ] = useState("")
+
 // NEW EMPLOYEE STATES
   const [ lastname, setLastname ] = useState("")
   const [ firstname, setFirstname ] = useState("")
@@ -83,6 +83,7 @@ const handleSubmit =  async () => {
       readData()
   }
 }
+
 
 // Add button
 const handleAdd =() => {

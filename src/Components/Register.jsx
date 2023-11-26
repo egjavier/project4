@@ -16,10 +16,10 @@ function Register() {
   return (
     <section className="login md:flex md:flex-row-reverse md:gap-0 md:justify-center px-12">
       <div className="bg-white hidden md:flex md:justify-center md:items-center 
-                      px-20 py-10 mt-10 md:rounded-r-lg md:border-s-2">
+                      px-20 py-10 mt-10 md:rounded-r-lg">
         <img  src={employeeImage} 
               alt="Employee Clipart" 
-              className="w-full h-60"
+              className="md:w-full lg:h-60 h-50 w-60"
         />
       </div>
     <div className="form bg-white px-20 py-9 mt-10 mx-auto md:mx-0 border-none md:rounded-l-lg flex flex-col gap-4 md:w-[450px]">

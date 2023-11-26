@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import Search from "./Search"
 
 function Navbar() {
   return (
@@ -6,8 +7,9 @@ function Navbar() {
       <div className="font-bold text-xl md:text-2xl text-white">
         <Link to="/">LOGO</Link>
       </div>
-      <div title='Login' className='text-white text-xs md-text-sm'>
-        LogIn
+      <div  title='Login' 
+            className='text-white text-xs md-text-sm'>
+        <Search />
       </div>
     </nav>
   )

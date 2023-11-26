@@ -6,6 +6,7 @@ import NotFound from "./Components/NotFound"
 import Login from "./Components/Login"
 import Register from "./Components/Register"
 import AddEmployee from "./Components/AddEmployee"
+import EmployeeCard from "./Components/EmployeeCard"
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route index element={<EmployeeList />} />
           <Route path="addemployee" element={<AddEmployee />} />
           <Route path="editemployee" element={<EditEmployee />} />
+          <Route path="employeecard" element={<EmployeeCard />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="*" element={<NotFound />} />
