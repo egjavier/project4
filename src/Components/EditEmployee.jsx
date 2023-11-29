@@ -59,12 +59,12 @@ const handleUpdate = () => {
 
       try{
         setDoc(doc(db, "employeelist", isEmployee.id), {...emp})
+        readData()
+        setEmployee(employee)
       } catch (err) {
         console.error(err)
       }
 
-      readData()
-      setEmployee(employee)
     } else if (result.isDenied) {
       Toast.fire({
         width: '15rem',
@@ -83,7 +83,7 @@ return (
       Update Employee Record
     </h1>
     <hr />
-    <div className="p-5 flex flex-col gap-5 duration-300">
+    <div className="p-5 flex flex-col gap-2 duration-300">
     {/* upload image */}
     <div>
       <label htmlFor="profileImage" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6]">Image: </label>
@@ -96,8 +96,8 @@ return (
       />                
     </div>
     {/* name */}
-    <div className="flex flex-col md:flex-row gap-2 md:gap-5 justify-start items-start">
-      <div>
+    <div className="grid grid-cols-12 gap-2">
+      <div className="col-span-6">
         <label htmlFor="lastname" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6]">Last Name:</label>
         <input  name="lastname" id="lastname" 
                 type="text" 
@@ -105,11 +105,11 @@ return (
                 value={lastname}
                 onChange={e => setLastname(e.target.value)}
                 className="placeholder:italic placeholder:indent-2 
-                          border outline-neutral-700 rounded-sm
+                          border outline-neutral-700 rounded-sm w-full
                           text-xs md:text-sm indent-2  py-1"
         />                
       </div>
-      <div>
+      <div className="col-span-6">
         <label htmlFor="firstname" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6]">First Name:</label>
         <input  name="firstname" id="firstname" 
                 type="text" 
@@ -117,14 +117,14 @@ return (
                 value={firstname}
                 onChange={e => setFirstname(e.target.value)}
                 className="placeholder:italic placeholder:indent-2 
-                          border outline-neutral-700 rounded-sm
+                          border outline-neutral-700 rounded-sm w-full
                           text-xs md:text-sm indent-2 py-1"
         />                
       </div>
     </div>
     {/* job title and department */}
-    <div className="flex flex-col md:flex-row gap-2 md:gap-5 justify-start items-start">
-      <div>
+    <div className="grid grid-cols-12 gap-2">
+      <div className="col-span-6">
         <label htmlFor="jobTitle" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6]">Job Title:</label>
         <input  name="jobTitle" id="jobTitle" 
               type="text" 
@@ -132,11 +132,11 @@ return (
               value={jobTitle}
               onChange={e => setJobTitle(e.target.value)}
               className="placeholder:italic placeholder:indent-2 
-                        border outline-neutral-700 rounded-sm
+                        border outline-neutral-700 rounded-sm w-full
                         text-xs md:text-sm indent-2 py-1"
         />                
-        </div>
-      <div>
+      </div>
+      <div className="col-span-6">
         <label htmlFor="department" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6]">Department:</label>
         <input  name="department" id="department" 
                 type="text" 
@@ -144,14 +144,14 @@ return (
                 value={department}
                 onChange={e => setDepartment(e.target.value)}
                 className="placeholder:italic placeholder:indent-2 
-                          border outline-neutral-700 rounded-sm
+                          border outline-neutral-700 rounded-sm w-full
                           text-xs md:text-sm indent-2 py-1"
         />                
       </div>
     </div>
     {/* Email and phone */}
-    <div className="flex flex-col md:flex-row gap-2 md:gap-5 justify-start items-start">
-      <div>
+    <div className="grid grid-cols-12 gap-2">
+      <div className="col-span-6">
         <label htmlFor="email" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6]">Email:</label>
         <input  name="email" id="email" 
               type="email" 
@@ -159,11 +159,11 @@ return (
               value={email}
               onChange={e => setEmail(e.target.value)}
               className="placeholder:italic placeholder:indent-2 
-                        border outline-neutral-700 rounded-sm
+                        border outline-neutral-700 rounded-sm w-full
                         text-xs md:text-sm indent-2 py-1"
         />                
       </div>
-      <div>
+      <div className="col-span-6">
         <label htmlFor="phone" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6] ">Phone:</label>
         <input  name="phone" id="phone" 
                 type="number" 
@@ -171,34 +171,35 @@ return (
                 value={phone}
                 onChange={e => setPhone(Number(e.target.value))}
                 className="placeholder:italic placeholder:indent-2 
-                          border outline-neutral-700 rounded-sm
+                          border outline-neutral-700 rounded-sm w-full
                           text-xs md:text-sm indent-2 py-1"
         />
       </div>
     </div>
     {/* Employment Status and hire date */}
-    <div className="flex flex-col md:flex-row gap-2 md:gap-5 justify-start items-start">
-      <div>
+    <div className="grid grid-cols-12 gap-2">
+      <div className="col-span-6">
         <label htmlFor="employmentStatus" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6]">Status</label>
         <select name="employmentStatus" 
               id="employmentStatus"
               value={employmentStatus}
               onChange={e => setEmploymentStatus(e.target.value)}
-              className="italic border outline-neutral-700 rounded-sm
+              className="italic border outline-neutral-700 rounded-sm w-full
               text-xs md:text-sm indent-1 text-neutral-400 py-1" >
+        <option value="Select">Select</option>
         <option value="Full-time">Full-time</option>
         <option value="Part-time">Part-time</option>
         <option value="Internship">Internship</option>
         </select>
       </div>
-      <div>
+      <div className="col-span-6">
         <label htmlFor="hireDate" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6]">Hire Date:</label>
         <input  name="hireDate" id="hireDate" 
                 type="date" 
                 placeholder="Nov 17 2020"
                 value={hireDate}
                 onChange={e => setHireDate(e.target.value)}
-                className="border outline-neutral-700 rounded-sm cursor-pointer
+                className="border outline-neutral-700 rounded-sm cursor-pointer w-full
                           text-xs md:text-sm indent-1 text-neutral-400 py-1"
         />                
       </div>

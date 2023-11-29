@@ -13,12 +13,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<EmployeeList />} />
-          <Route path="addemployee" element={<AddEmployee />} />
-          <Route path="editemployee" element={<EditEmployee />} />
-          <Route path="employeecard" element={<EmployeeCard />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
+          <Route index element={<Login />} />
+          <Route path="register" element={<Register />} />      
+          <Route path="employeelist" element={<EmployeeList />} />
+          <Route path="employeecard/:id" element={<EmployeeCard />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
