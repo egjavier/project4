@@ -2,16 +2,19 @@ import AddEmployee from "./AddEmployee"
 import profileImage from '../Images/profilePic.jpg'
 import db from "./FirebaseConfig"
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import Swal from 'sweetalert2';
 import EditEmployee from "./EditEmployee"
 import Pagination from "./Pagination"
 import Login from "./Login"
-import { useOutletContext } from "react-router-dom"
-import { useNavigate } from "react-router-dom"
+import { useOutletContext, useNavigate } from "react-router-dom"
+import Context from "../Context/Context";
 
 
 function EmployeeList() {
+
+  const {search} = useContext(Context)
+  console.log(search)
 
   //PASS ALL OUTLET PROPS TO ALL CHILDREN
   const isLoggedIn = useOutletContext()
@@ -182,6 +185,20 @@ function EmployeeList() {
                               <tbody>
                                 { //  MAP THROUGH THE EMPLOYEE ARRAY OF OBJECTS TO GET DATA
                                   employee
+                                  .filter(emp => {
+                                    return (
+                                      search === "" ? emp 
+                                                    : (
+                                                      emp.firstname.toLowerCase().includes(search) ||
+                                                      emp.lastname.toLowerCase().includes(search) ||
+                                                      emp.id.toLowerCase().includes(search) ||
+                                                      emp.email.toLowerCase().includes(search) ||
+                                                      emp.employmentStatus.toLowerCase().includes(search) ||
+                                                      emp.jobTitle.toLowerCase().includes(search) ||
+                                                      emp.department.toLowerCase().includes(search)
+                                                    )
+                                    )
+                                  })
                                   .slice(numbersOfUsersSeen, numbersOfUsersSeen + usersPerPage)
                                   .map(e => {
                                     return (

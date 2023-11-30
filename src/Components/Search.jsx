@@ -1,11 +1,14 @@
+import Context from "../Context/Context"
 import SearchIcon from "../Images/SearchIcon.svg"
-import { useState } from "react"
+import { useState, useContext } from "react"
 
 function Search() {
 
-
+  
   const [ areSearching, setAreSearching ] = useState(false)
-  const [ search, setSearch ] =  useState('')
+  const [ searchFilter, setSearchFilter ] =  useState('')
+  
+  const {setSearch} = useContext(Context)
 
   const handleSearchIcon = () => {
     setAreSearching(!areSearching)
@@ -20,13 +23,16 @@ function Search() {
         />
       </div>
       <div className={ !areSearching ? "hidden ounded-md" : "rounded-md" }>
-        <div value={search} className="flex rounded-md">
+        <div value={searchFilter} className="flex rounded-md">
           <input  type="search" 
                   name="search"
                   placeholder="Search"
                   onDoubleClick={handleSearchIcon}
-                  value={search}
-                  onChange={e => setSearch(e.target.value)}
+                  value={searchFilter}
+                  onChange={e => {
+                    setSearchFilter(e.target.value.toLowerCase())
+                    setSearch(e.target.value.toLowerCase())
+                  }}
                   className="rounded-md indent-1 placeholder:italic p-1
                             text-gray-500 text-xs md:text-base"
           />
