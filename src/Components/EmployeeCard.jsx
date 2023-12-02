@@ -8,6 +8,7 @@ import linkedin from "../Images/linkedin.svg"
 import DoughnutComponent from "./Dashboard/DoughnutComponent"
 import CalendarComponent from "./Dashboard/CalendarComponent"
 import LineChart from "./Dashboard/LineChart"
+import LeaveCredit from "./Dashboard/LeaveCredit"
 
 function EmployeeCard() {
 
@@ -110,80 +111,34 @@ function EmployeeCard() {
               {data.department}
             </p>
           </div>
-
-          {/* <hr />
-          <div className="my-5 flex justify-center items-center gap-4">
-            <div className="flex flex-col-reverse justify-center items-center ">
-              <small className="text-[#00101C] text-center font-semibold mt-2">
-                Vacation <br /> Leave
-              </small>
-              <p className="bg-[#297EA6] text-white w-14 h-14 rounded-full text-2xl font-black
-                            flex justify-center items-center tracking-wide">
-                40
-              </p>
-            </div>
-            <div className="flex flex-col-reverse justify-center items-center">
-              <small className="text-[#00101C] text-center font-semibold mt-2">
-                Sick <br/> Leave
-              </small>
-              <p className="bg-[#297EA6] text-white w-14 h-14 rounded-full text-2xl font-black
-                            flex justify-center items-center tracking-wide">
-                20
-              </p>
-            </div>
-          </div> */}
         </div>
       </div>
 
       {/* ROW 2 */}
       <div className="md:grid md:grid-cols-2">
-          <div className="md:col-span-1">
-            <div className="md:grid">
-              <div className="flex flex-col justify-center md:text-start
-                              border rounded-lg shadow-lg p-5 m-3">
-                <CalendarComponent />
-              </div>
-              <div className="
-                              border rounded-lg shadow-lg p-5 m-3">
-                <DoughnutComponent />
-              </div>
-            </div>
+        {/*Calendar and Dougnut Chart  */}
+        <div className="md:col-span-1 md:grid md:gid-row-4">
+          <div className="border rounded-md shadow-md p-5 m-3
+                          md:row-span-2">
+            <CalendarComponent />
           </div>
+          <div className="border rounded-md shadow-md p-5 m-3
+                          md:row-span-2">
+            <DoughnutComponent />
+          </div>
+        </div>
+        {/*Leaves and Line Chart */}
+        <div className="md:col-span-1 md:grid md:gid-row-4 md:grid-cols-1">
+          <div className="border rounded-md shadow-md p-5 m-3
+                          md:row-span-1">
+            <LeaveCredit />
+          </div>
+          <div className="border rounded-md shadow-md p-5 m-3
+                          md:row-span-3">
+            <LineChart />
+          </div>
+        </div>
           
-          <div className="md:col-span-1 md:grid md:grid-rows-3">
-              <div className="md:row-span-1 border rounded-lg shadow-lg p-5 m-3">
-                <h2 className="font-bold text-[#00101C] text-xl md:text-2xl mb-3">
-                  Leave Credits
-                </h2>
-                <hr/>
-                <div className="flex justify-center items-center gap-10 mt-4">
-                  <div className="flex flex-col-reverse justify-center items-center ">
-                    <small className="text-[#00101C] text-center font-semibold mt-2">
-                      Vacation Leave
-                    </small>
-                    <p className="bg-[#297EA6] text-white w-14 h-14 rounded-full text-2xl font-black
-                                  flex justify-center items-center tracking-wide">
-                      40
-                    </p>
-                  </div>
-                  <div className="flex flex-col-reverse justify-center items-center">
-                    <small className="text-[#00101C] text-center font-semibold mt-2">
-                      Sick Leave
-                    </small>
-                    <p className="bg-[#297EA6] text-white w-14 h-14 rounded-full text-2xl font-black
-                                  flex justify-center items-center tracking-wide">
-                      20
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="text-[#00101C] md:row-span-2
-                              border rounded-lg shadow-lg p-5 m-3">
-                <LineChart />
-              </div>
-            </div>
-
-
       </div>
     </div>
   </section>

@@ -15,7 +15,7 @@ function CalendarComponent() {
                 onChange={(e) => setDate(e.value)} 
                 inline 
                 showWeek 
-                className="mt-4"
+                className="mt-4 w-full"
       />
     </>
   )
