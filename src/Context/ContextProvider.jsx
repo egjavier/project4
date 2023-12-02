@@ -3,9 +3,13 @@ import Context from './Context'
 
 function ContextProvider ({children}) {
   const [ search, setSearch ] = useState("")
+  const [ employeeInfo, setEmployeeInfo ] = useState({})
 
   return (
-    <Context.Provider value={{search, setSearch}}>
+    <Context.Provider value={{
+                              search, setSearch,
+                              employeeInfo, setEmployeeInfo, 
+                            }}>
       {children}
     </Context.Provider>
   )

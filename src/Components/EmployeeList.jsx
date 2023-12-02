@@ -13,12 +13,6 @@ import Context from "../Context/Context";
 
 function EmployeeList() {
 
-  const {search} = useContext(Context)
-  console.log(search)
-
-  //PASS ALL OUTLET PROPS TO ALL CHILDREN
-  const isLoggedIn = useOutletContext()
-
   const [ isSortingName, setIsSortingName ] = useState(false)
   const [ isSortingJob, setIsSortingJob ] = useState(false)
   const [ isSortingDepartment, setIsSortingDepartment ] = useState(false)
@@ -28,10 +22,16 @@ function EmployeeList() {
 
   const [ isUpdating, setIsUpdating ] = useState(false)
   const [ isEmployee, setIsEmployee ] = useState({})
+  
+  const {search} = useContext(Context)
+  const {setEmployeeInfo} = useContext(Context)
 
   const [ currentPage, setCurrentPage ] = useState(0)
   const [ usersPerPage, setUsersPerPage] = useState(10)
   const numbersOfUsersSeen = currentPage * usersPerPage
+
+  //PASS ALL OUTLET PROPS TO ALL CHILDREN
+  const isLoggedIn = useOutletContext() 
 
   // READ DATA FROM FIREBASE
   const readData = async () => {
@@ -42,6 +42,9 @@ function EmployeeList() {
   useEffect (() => {
     readData()
   }, [])
+
+  setEmployeeInfo(employee)
+
 
   //MODAL
   const Toast = Swal.mixin({
@@ -134,6 +137,7 @@ function EmployeeList() {
     navigate(`/employeecard/:${e.id}`, { replace: true } )
   }
 
+
   return (
     <section value={employee} className="max-w-[1000px] mx-auto">
       {
@@ -197,6 +201,7 @@ function EmployeeList() {
                                                       emp.jobTitle.toLowerCase().includes(search) ||
                                                       emp.department.toLowerCase().includes(search)
                                                     )
+                                                    
                                     )
                                   })
                                   .slice(numbersOfUsersSeen, numbersOfUsersSeen + usersPerPage)
@@ -206,7 +211,7 @@ function EmployeeList() {
                                           className="text-xs md:text-sm text-[#f3f3f3]  cursor-pointer even:bg-[#00101C]/60 odd:bg-[#00101C]/70
                                                       hover:backdrop-blur-0 hover:bg-[#00101C]/40 duration-300">
                                         <td>
-                                          <div className="flex justify-center"><img src={profileImage} alt='Profile Picture' className="rounded-full w-10 h-10"/></div>
+                                          <div className="flex justify-center"><img src={profileImage} alt='Profile Picture' className="rounded-full object-cover w-10 h-10"/></div>
                                         </td>
                                         <td onClick={() => {handleEmployeeDetails(e)}}
                                             className="text-start px-2 py-1 tracking-wide break-words

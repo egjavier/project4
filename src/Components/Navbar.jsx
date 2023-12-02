@@ -5,7 +5,7 @@ import Logout from './Logout'
 function Navbar({isLoggedIn}) {
 
   return (
-    <nav className="sticky top-0 px-5 py-2 bg-[#00101C] shadow-lg flex items-center justify-between">
+    <nav className="sticky top-0 px-5 py-2 bg-[#00101C] shadow-lg flex items-center justify-between z-10">
       <div className="font-bold text-xl md:text-2xl text-white">
         <Link to={isLoggedIn ? "employeelist" : "/"}>LOGO</Link>
       </div>
