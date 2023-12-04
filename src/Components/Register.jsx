@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import Swal from 'sweetalert2'
 import { useOutletContext } from 'react-router-dom'
-import EmployeeList from '../Components/EmployeeList'
+import EmployeeList from './EmployeeList'
 
 function Register() {
 
