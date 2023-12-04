@@ -7,7 +7,7 @@ function CalendarComponent() {
 
   return (
     <>
-      <h2 className="font-bold text-[#00101C] text-xl md:text-2xl mb-3">
+      <h2 className="font-bold text-[#00101C] text-xl md:text-2xl mb-3 text-start">
         Calendar
       </h2>
       <hr/>
@@ -15,7 +15,7 @@ function CalendarComponent() {
                 onChange={(e) => setDate(e.value)} 
                 inline 
                 showWeek 
-                className="mt-4 w-full"
+                className="mt-4 w-72"
       />
     </>
   )

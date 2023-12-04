@@ -15,9 +15,11 @@ function EmployeeCard() {
   const params = useParams()
   const employeeID = params.id.slice(1)
   const e = useContext(Context)
+  localStorage.setItem("employee", JSON.stringify(e.employeeInfo))
   const employee = e.employeeInfo
 
-  console.log(employee)
+  
+
   const [ data, setData ] = useState('')
 
   useEffect(() => {
@@ -48,7 +50,7 @@ function EmployeeCard() {
               {data.firstname} {data.lastname}
             </p>
             <p className="font-bold text-[#297EA6] text-md md:text-lg md:indent-6">{data.jobTitle}</p>
-            <p className="font-semibold italic text-[#297EA6] text-sm md:text-md md:indent-6">{data.email}</p>
+            <p className="font-semibold italic text-[#297EA6] text-sm md:text-md md:indent-6 break-all">{data.email}</p>
             <p className="font-semibold italic text-[#297EA6] text-sm md:text-md md:indent-6">{data.phone}</p>
             <div className="p-1 flex justify-center items-center gap-2 md:ms-4">
               <img  src={github}
@@ -77,7 +79,7 @@ function EmployeeCard() {
                               px-2 md:px-0 bg-[#297EA6] rounded-md text-white">
               Employee ID
             </small>
-            <p className="md:col-span-2 md:indent-2 md:text-center text-[#297EA6] italic text-sm">
+            <p className="md:col-span-2 md:indent-2 md:text-center text-[#297EA6] italic text-sm break-all">
               {data.id}
             </p>
           </div>
@@ -119,7 +121,7 @@ function EmployeeCard() {
         {/*Calendar and Dougnut Chart  */}
         <div className="md:col-span-1 md:grid md:gid-row-4">
           <div className="border rounded-md shadow-md p-5 m-3
-                          md:row-span-2">
+                          md:row-span-2 text-center">
             <CalendarComponent />
           </div>
           <div className="border rounded-md shadow-md p-5 m-3

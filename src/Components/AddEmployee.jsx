@@ -1,12 +1,29 @@
-import { useState } from "react";
+import { useState, useContext} from "react";
 import db from "./FirebaseConfig";
 import { addDoc, collection} from "firebase/firestore";
 import Swal from 'sweetalert2';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import { storage } from "./FirebaseConfig"
+import Context from "../Context/Context";
 
 function AddEmployee({employee, setEmployee, readData}) {
 
-  const [ image, setImage ] = useState("")
+// const {setImgLink} = useContext(Context)
 
+//Firebase Storage
+// const [ imageUrl, setImageUrl ] = useState('')
+// const [ url, setUrl ] = useState('')
+// const handleUploadImage = () => {
+//   const imgName = new Date().getTime() + imageUrl.name
+//   const storageRef = ref(storage, imgName)
+//   uploadBytes(storageRef, imageUrl).then(() => {
+//     alert('file uploade')
+    // getDownloadURL(storageRef).then(url => {
+    //   setUrl(url)
+    //   setImgLink(url)
+    // }).catch(error => console.error(error.message, "error getting image url"))
+//   }).catch(error => console.error(error.message))
+// }
 // NEW EMPLOYEE STATES
   const [ lastname, setLastname ] = useState("")
   const [ firstname, setFirstname ] = useState("")
@@ -73,6 +90,9 @@ const handleSubmit =  async () => {
       setHireDate("")
       setEmploymentStatus("")
 
+      // firebase Storage
+      // handleUploadImage()
+
       Toast.fire({
         icon: "success",
         iconColor: "#297EA6",
@@ -112,6 +132,8 @@ const handleAdd =() => {
             <input  name="profileImage" id="profileImage" 
                     type="file" 
                     placeholder="Doe"
+                    // onChange={e => setImageUrl(e.target.files[0])}
+                    // defaultValue={imageUrl}
                     className="placeholder:italic placeholder:indent-2
                               border outline-neutral-700 rounded-sm
                               text-xs md:text-sm indent-2 text-[#297EA6] py-1"

@@ -10,7 +10,6 @@ import Login from "./Login"
 import { useOutletContext, useNavigate } from "react-router-dom"
 import Context from "../Context/Context";
 
-
 function EmployeeList() {
 
   const [ isSortingName, setIsSortingName ] = useState(false)
@@ -25,6 +24,7 @@ function EmployeeList() {
   
   const {search} = useContext(Context)
   const {setEmployeeInfo} = useContext(Context)
+  // const {imgLink} = useContext(Context)
 
   const [ currentPage, setCurrentPage ] = useState(0)
   const [ usersPerPage, setUsersPerPage] = useState(10)
@@ -38,14 +38,13 @@ function EmployeeList() {
     const querySnapshot = await getDocs(collection(db, "employeelist"))
     const employees = querySnapshot.docs.map( e => ({...e.data(), id: e.id}))
     setEmployee(employees.sort((a, b) => a.lastname.localeCompare(b.lastname)))
+    console.log(employee)
   }
   useEffect (() => {
     readData()
   }, [])
 
   setEmployeeInfo(employee)
-
-
   //MODAL
   const Toast = Swal.mixin({
     toast: true,
@@ -135,6 +134,7 @@ function EmployeeList() {
 
   const handleEmployeeDetails = (e) => {
     navigate(`/employeecard/:${e.id}`, { replace: true } )
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
   }
 
 
@@ -222,7 +222,7 @@ function EmployeeList() {
                                         <td className="hidden lg:table-cell text-start px-3 py-1 break-words">{e.department}</td>
                                         <td className="hidden md:table-cell text-start px-3 py-1 break-all">{e.email}</td>
                                         <td className="hidden lg:table-cell text-start px-3 py-1 break-all">{e.phone}</td>
-                                        <td className="table-cell text-center px-3">{e.employmentStatus}</td>
+                                        <td className="table-cell text-start px-3">{e.employmentStatus}</td>
                                         <td className="flex justify-center items-center cursor-pointer h-[55px] px-3">
                                           <div  className="me-1 hover:scale-125 duration-150 bg-[#00101C]/70 rounded-full p-1" 
                                                 title="Edit"
