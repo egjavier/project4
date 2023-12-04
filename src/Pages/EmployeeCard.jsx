@@ -1,14 +1,14 @@
 import { useContext, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate} from "react-router-dom"
 import Context from "../Context/Context"
 import { useEffect } from "react"
 import imagePlaceholder from "../Images/profilePic.jpg"
 import github from "../Images/github.svg"
 import linkedin from "../Images/linkedin.svg"
-import DoughnutComponent from "./Dashboard/DoughnutComponent"
-import CalendarComponent from "./Dashboard/CalendarComponent"
-import LineChart from "./Dashboard/LineChart"
-import LeaveCredit from "./Dashboard/LeaveCredit"
+import DoughnutComponent from "../Components/Dashboard/DoughnutComponent"
+import CalendarComponent from "../Components/Dashboard/CalendarComponent"
+import LineChart from "../Components/Dashboard/LineChart"
+import LeaveCredit from "../Components/Dashboard/LeaveCredit"
 
 function EmployeeCard() {
 
@@ -18,7 +18,7 @@ function EmployeeCard() {
   localStorage.setItem("employee", JSON.stringify(e.employeeInfo))
   const employee = e.employeeInfo
 
-  
+  const navigate = useNavigate()
 
   const [ data, setData ] = useState('')
 
@@ -28,8 +28,18 @@ function EmployeeCard() {
     })
   }, [])
 
+  const back = () => {
+    navigate('/employeelist', { replace: true })
+  }
+
   return (
    <section className="mx-auto max-w-[1000px]">
+    <div  onClick={back}
+          className="fixed mx-8 my-3 rounded-full text-white bg-[#00101C]/80 h-10 w-10 pb-2 
+                    font-black text-3xl hover:translate-x-[-10px] duration-150 cursor-pointer
+                    flex justify-center items-center">
+      ←
+    </div>
     <div className="employeeCard bg-white m-5 p-2 rounded-md">
       {/* ROW 1 */}
       <div className="md:grid md:grid-cols-5">

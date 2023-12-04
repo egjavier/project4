@@ -1,7 +1,7 @@
 import employeeImage from '../Images/login.webp'
 import { useNavigate } from "react-router-dom"
 import { signInWithEmailAndPassword } from "firebase/auth"
-import { auth } from "./FirebaseConfig"
+import { auth } from "../Components/FirebaseConfig"
 import { useState } from 'react'
 import Swal from 'sweetalert2'
 import { useOutletContext } from 'react-router-dom'

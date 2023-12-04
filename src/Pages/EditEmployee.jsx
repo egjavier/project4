@@ -1,4 +1,4 @@
-import db from "./FirebaseConfig";
+import db from "../Components/FirebaseConfig";
 import { useState } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import Swal from 'sweetalert2'
@@ -205,7 +205,13 @@ return (
       </div>
     </div>  
     {/* submit button*/}
-    <div className="flex flex-col justify-end items-end gap-2">
+    <div className="flex justify-end items-end gap-2 mt-3">
+      <button onClick={()=>{setIsUpdating(false)}}
+              className="text-[#00101C] rounded-md px-5 py-1
+                          hover:scale-105 duration-150 ring-2 ring-inset
+                         ring-[#00101C] md:text-md ">
+        Cancel
+      </button>      
       <button onClick={handleUpdate}
             className="bg-[#00101C] rounded-md px-5 py-1
                         hover:scale-105 duration-150

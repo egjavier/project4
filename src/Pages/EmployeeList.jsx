@@ -1,11 +1,11 @@
 import AddEmployee from "./AddEmployee"
 import profileImage from '../Images/profilePic.jpg'
-import db from "./FirebaseConfig"
+import db from "../Components/FirebaseConfig"
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore"
 import { useEffect, useState, useContext } from "react"
 import Swal from 'sweetalert2';
 import EditEmployee from "./EditEmployee"
-import Pagination from "./Pagination"
+import Pagination from "../Components/Pagination"
 import Login from "./Login"
 import { useOutletContext, useNavigate } from "react-router-dom"
 import Context from "../Context/Context";

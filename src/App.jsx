@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import EmployeeList from "./Components/EmployeeList"
+import EmployeeList from "./Pages/EmployeeList"
 import Layout from "./Components/Layout"
-import NotFound from "./Components/NotFound"
-import Login from "./Components/Login"
-import Register from "./Components/Register"
-import EmployeeCard from "./Components/EmployeeCard"
+import NotFound from "./Pages/NotFound"
+import Login from "./Pages/Login"
+import Register from "./Pages/Register"
+import EmployeeCard from "./Pages/EmployeeCard"
 
 function App() {
   return (

@@ -1,9 +1,9 @@
 import { useState, useContext} from "react";
-import db from "./FirebaseConfig";
+import db from "../Components/FirebaseConfig";
 import { addDoc, collection} from "firebase/firestore";
 import Swal from 'sweetalert2';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
-import { storage } from "./FirebaseConfig"
+import { storage } from "../Components/FirebaseConfig"
 import Context from "../Context/Context";
 
 function AddEmployee({employee, setEmployee, readData}) {
