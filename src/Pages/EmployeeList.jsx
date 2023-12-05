@@ -38,7 +38,6 @@ function EmployeeList() {
     const querySnapshot = await getDocs(collection(db, "employeelist"))
     const employees = querySnapshot.docs.map( e => ({...e.data(), id: e.id}))
     setEmployee(employees.sort((a, b) => a.lastname.localeCompare(b.lastname)))
-    console.log(employee)
   }
   useEffect (() => {
     readData()

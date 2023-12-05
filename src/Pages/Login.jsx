@@ -6,6 +6,7 @@ import { useState } from 'react'
 import Swal from 'sweetalert2'
 import { useOutletContext } from 'react-router-dom'
 import EmployeeList from './EmployeeList'
+import { TextField } from '@mui/material'
 
 function Login() {
 
@@ -29,7 +30,7 @@ function Login() {
       popup: 'colored-toast',
     },
     showConfirmButton: false,
-    timer: 1300,
+    timer: 800,
     timerProgressBar: true,
   }) 
 
@@ -89,40 +90,37 @@ function Login() {
                           </div>
                           <div className="flex flex-col gap-5">
                             <div className="flex flex-col gap-2">
-                              <label  htmlFor="userEmail" 
-                                      className="me-1 text-sm font-semibold text-[#297EA6]">
-                                        EMAIL
-                              </label>
-                              <input  name="userEmail" id="userEmail"
-                                      type="email"
-                                      placeholder="johnsmith@email.com"
-                                      onChange={(e) => setEmail(e.target.value)}
-                                      value={email}
-                                      className=" placeholder:italic placeholder:indent-2 
-                                                  border outline-neutral-700 rounded-sm
-                                                  text-base indent-2 py-1 ps-1"
+                              <TextField  name="userEmail"
+                                          id="userEmail"
+                                          type="email"
+                                          placeholder="johnsmith@email.com"
+                                          label="Email"
+                                          variant="standard"
+                                          required
+                                          onChange={(e) => setEmail(e.target.value)}
+                                          value={email}
+                                          className="indent-2"
+                                          color="secondary"
                               />
                             </div>
                             <div className="flex flex-col gap-2">
-                              <label  htmlFor="password" 
-                                      className="me-1 text-sm font-semibold text-[#297EA6]">
-                                PASSWORD
-                              </label>
-                              <input  name="password" id="password"
-                                      type="password"
-                                      required
-                                      placeholder="••••••••••••••••"
-                                      onChange={(e) => setPassword(e.target.value)}
-                                      value={password}
-                                      className=" placeholder:italic placeholder:indent-2 
-                                                  border outline-neutral-700 rounded-sm
-                                                  text-base indent-2 py-1 ps-1"
+                              <TextField  name="password" 
+                                          id="password"
+                                          type="password"
+                                          required
+                                          placeholder="••••••••••••••••"
+                                          onChange={(e) => setPassword(e.target.value)}
+                                          value={password}
+                                          label="Password"
+                                          variant="standard"
+                                          className="indent-2"
+                                          color="secondary"
                               />
                             </div>
                             <button   onClick={handleLogin}
                                       className="bg-[#00101C] rounded-md py-2 mt-3
                                                   hover:scale-105 duration-150
-                                                  text-white text-lg font-bold tracking-[0.6rem] ">
+                                                  text-white text-lg font-bold tracking-widest ">
                                 Login
                             </button>
                           </div>

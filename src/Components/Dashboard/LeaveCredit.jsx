@@ -1,5 +1,3 @@
-import React from 'react'
-
 function LeaveCredit() {
   return (
     <div>
@@ -15,7 +13,7 @@ function LeaveCredit() {
                         flex justify-center items-center text-2xl font-bold tracking-wider'>
             40
           </p>
-          <small className='text-[#297EA6] font-semibold flex text-center'>
+          <small className='text-[#297EA6] font-semibold flex justify-center text-center'>
             Vacation <br/> Leave
           </small>
         </div>

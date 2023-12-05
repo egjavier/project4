@@ -7,6 +7,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import Swal from 'sweetalert2'
 import { useOutletContext } from 'react-router-dom'
 import EmployeeList from './EmployeeList'
+import { TextField } from '@mui/material'
 
 function Register() {
 
@@ -32,7 +33,7 @@ function Register() {
       popup: 'colored-toast',
     },
     showConfirmButton: false,
-    timer: 1300,
+    timer: 800,
     timerProgressBar: true,
   }) 
 
@@ -41,7 +42,6 @@ function Register() {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log(user)
           Toast.fire({
             icon: "success",
             iconColor: "#297EA6",
@@ -69,7 +69,12 @@ function Register() {
         });
 
   } else {
-    alert("Incorrect or missing credential")
+    Toast.fire({
+      icon: "warning",
+      iconColor: "#297EA6",
+      title: `Invalid or Missing credentials.`,
+      color: "#297EA6",
+    })  
   }
 }
 
@@ -92,65 +97,58 @@ function Register() {
                           </div>
                           <div className="flex flex-col gap-5">
                             <div className="flex flex-col gap-2">
-                            <label  htmlFor="username" 
-                                      className="me-1 text-sm font-semibold text-[#297EA6]">
-                                        USERNAME
-                              </label>
-                              <input  name="username" id="username"
-                                      type="text"
-                                      placeholder="johndoe"
-                                      onChange={e => setUsername(e.target.value)}
-                                      value={username}
-                                      className=" placeholder:italic placeholder:indent-2 
-                                                  border outline-neutral-700 rounded-sm
-                                                  text-sm indent-2 py-1 ps-1"
+                              <TextField  name="username" 
+                                          id="username"
+                                          type="text"
+                                          label="Username"
+                                          required
+                                          variant='standard'
+                                          placeholder="johndoe"
+                                          onChange={e => setUsername(e.target.value)}
+                                          value={username}
+                                          className="indent-2"
+                                          color='secondary'
                               />
                             </div>
                             <div className="flex flex-col gap-2">
-                              <label  htmlFor="userEmail" 
-                                      className="me-1 text-sm font-semibold text-[#297EA6]">
-                                        EMAIL
-                              </label>
-                              <input  name="userEmail" id="userEmail"
-                                      type="email"
-                                      placeholder="johnsmith@email.com"
-                                      onChange={e => setEmail(e.target.value)}
-                                      value={email}
-                                      className=" placeholder:italic placeholder:indent-2 
-                                                  border outline-neutral-700 rounded-sm
-                                                  text-sm indent-2 py-1 ps-1"
+                              <TextField  name="userEmail" 
+                                          id="userEmail"
+                                          type="email"
+                                          label="Email"
+                                          required
+                                          variant='standard'
+                                          placeholder="johnsmith@email.com"
+                                          onChange={e => setEmail(e.target.value)}
+                                          value={email}
+                                          className="indent-2"
+                                          color='secondary'
                               />
                             </div>
                             <div className="flex flex-col gap-2">
-                              <label  htmlFor="password" 
-                                      className="me-1 text-sm font-semibold text-[#297EA6]">
-                                PASSWORD
-                              </label>
-                              <input  name="password" id="password"
-                                      type="password"
-                                      required
-                                      placeholder="••••••••••••••••"
-                                      onChange={e => setPassword(e.target.value)}
-                                      value={password}
-                                      className=" placeholder:italic placeholder:indent-2 
-                                                  border outline-neutral-700 rounded-sm
-                                                  text-sm indent-2 py-1 ps-1"
+                              <TextField  name="password" 
+                                          id="password"
+                                          type="password"
+                                          label="Password"
+                                          required
+                                          variant='standard'
+                                          placeholder="••••••••••••••••"
+                                          onChange={e => setPassword(e.target.value)}
+                                          value={password}
+                                          className="indent-2"
+                                          color='secondary'
                               />
                             </div>
                             <div className="flex flex-col gap-2">
-                              <label  htmlFor="confirmPassword" 
-                                      className="me-1 text-xs md:text-sm font-semibold text-[#297EA6]">
-                                CONFIRM PASSWORD
-                              </label>
-                              <input  name="confirmPassword" id="confirmPassword"
-                                      type="password"
-                                      required
-                                      placeholder="••••••••••••••••"
-                                      onChange={e => setConfirmPassword(e.target.value)}
-                                      value={confirmPassword}
-                                      className=" placeholder:italic placeholder:indent-2 
-                                                  border outline-neutral-700 rounded-sm
-                                                  text-sm  indent-2 py-1 ps-1"
+                              <TextField  name="confirmPassword" 
+                                          id="confirmPassword"
+                                          type="password"
+                                          label="Confirm Password"
+                                          required
+                                          variant='standard'                                          placeholder="••••••••••••••••"
+                                          onChange={e => setConfirmPassword(e.target.value)}
+                                          value={confirmPassword}
+                                          className="indent-2"
+                                          color='secondary'
                               />
                             </div>
                             <button   onClick={handleRegister}

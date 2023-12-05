@@ -1,10 +1,9 @@
 import Context from "../Context/Context"
-import SearchIcon from "../Images/SearchIcon.svg"
 import { useState, useContext } from "react"
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 
 function Search() {
 
-  
   const [ areSearching, setAreSearching ] = useState(false)
   const [ searchFilter, setSearchFilter ] =  useState('')
   
@@ -17,10 +16,12 @@ function Search() {
   return (
     <div className="flex items-center gap-2">
       <div className={ !areSearching ? "flex cursor-pointer" : "hidden cursor-pointer" }>
-        <img  src={SearchIcon} alt="Search" title="Search"
+        <div  title="Search"
               onClick={handleSearchIcon}
-              className="h-6 p-1 bg-white rounded-full hover:scale-105 duration-150 "
-        />
+              className="hover:scale-110 duration-150"
+        >
+          <PersonSearchIcon fontSize="medium"/>
+        </div>
       </div>
       <div className={ !areSearching ? "hidden ounded-md" : "rounded-md" }>
         <div value={searchFilter} className="flex rounded-md">
@@ -34,7 +35,7 @@ function Search() {
                     setSearch(e.target.value.toLowerCase())
                   }}
                   className="rounded-md indent-1 placeholder:italic p-1
-                            text-gray-500 text-xs md:text-base"
+                            text-gray-500 text-xs md:text-sm"
           />
         </div>
       </div>

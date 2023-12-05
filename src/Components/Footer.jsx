@@ -1,4 +1,3 @@
-
 function Footer() {
   return (
     <div className="text-center text-white text-xs mg:text-sm

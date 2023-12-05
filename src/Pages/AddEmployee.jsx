@@ -2,28 +2,25 @@ import { useState, useContext} from "react";
 import db from "../Components/FirebaseConfig";
 import { addDoc, collection} from "firebase/firestore";
 import Swal from 'sweetalert2';
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
-import { storage } from "../Components/FirebaseConfig"
-import Context from "../Context/Context";
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 function AddEmployee({employee, setEmployee, readData}) {
 
-// const {setImgLink} = useContext(Context)
+  //Upload Button Material UI
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+  });
 
-//Firebase Storage
-// const [ imageUrl, setImageUrl ] = useState('')
-// const [ url, setUrl ] = useState('')
-// const handleUploadImage = () => {
-//   const imgName = new Date().getTime() + imageUrl.name
-//   const storageRef = ref(storage, imgName)
-//   uploadBytes(storageRef, imageUrl).then(() => {
-//     alert('file uploade')
-    // getDownloadURL(storageRef).then(url => {
-    //   setUrl(url)
-    //   setImgLink(url)
-    // }).catch(error => console.error(error.message, "error getting image url"))
-//   }).catch(error => console.error(error.message))
-// }
 // NEW EMPLOYEE STATES
   const [ lastname, setLastname ] = useState("")
   const [ firstname, setFirstname ] = useState("")
@@ -127,17 +124,20 @@ const handleAdd =() => {
                       }>
         {/* upload image */}
         <hr />
-        <div>
-            <label htmlFor="profileImage" className="text-xs md:text-sm font-semibold text-[#297EA6]">Image: </label>
-            <input  name="profileImage" id="profileImage" 
-                    type="file" 
-                    placeholder="Doe"
-                    // onChange={e => setImageUrl(e.target.files[0])}
-                    // defaultValue={imageUrl}
-                    className="placeholder:italic placeholder:indent-2
-                              border outline-neutral-700 rounded-sm
-                              text-xs md:text-sm indent-2 text-[#297EA6] py-1"
-            />                
+        <div className="text-center py-3">
+          <Button name="profileImage"
+                  id="profileImage" 
+                  component="label"
+                  variant="contained"
+                  startIcon={<CloudUploadIcon />}
+                  color="secondary"
+                  style={{
+                    fontSize: ".7rem"
+                  }}
+          > 
+            Upload Image
+            <VisuallyHiddenInput type="file" />
+          </Button>             
         </div>
         {/* name */}
         <div className="grid grid-cols-12 gap-2">

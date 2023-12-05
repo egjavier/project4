@@ -6,8 +6,8 @@ import imagePlaceholder from "../Images/profilePic.jpg"
 import github from "../Images/github.svg"
 import linkedin from "../Images/linkedin.svg"
 import DoughnutComponent from "../Components/Dashboard/DoughnutComponent"
-import CalendarComponent from "../Components/Dashboard/CalendarComponent"
-import LineChart from "../Components/Dashboard/LineChart"
+import BarChartComponent from "../Components/Dashboard/BarChartComponent"
+import LineChartComponent from "../Components/Dashboard/LineChartComponent"
 import LeaveCredit from "../Components/Dashboard/LeaveCredit"
 
 function EmployeeCard() {
@@ -127,27 +127,27 @@ function EmployeeCard() {
       </div>
 
       {/* ROW 2 */}
-      <div className="md:grid md:grid-cols-2">
-        {/*Calendar and Dougnut Chart  */}
-        <div className="md:col-span-1 md:grid md:gid-row-4">
-          <div className="border rounded-md shadow-md p-5 m-3
-                          md:row-span-2 text-center">
-            <CalendarComponent />
-          </div>
-          <div className="border rounded-md shadow-md p-5 m-3
-                          md:row-span-2">
+      <div className="lg:grid lg:grid-cols-2">
+        {/*Pie and Line Chart  */}
+        <div className="lg:col-span-1 lg:grid lg:gid-row-4">
+          <div className="border rounded-lg shadow-lg p-5 m-3
+                          lg:row-span-2 text-center">
             <DoughnutComponent />
           </div>
+          <div className="border rounded-lg shadow-lg p-5 m-3
+                          lg:row-span-2">
+            <LineChartComponent />
+          </div>
         </div>
-        {/*Leaves and Line Chart */}
-        <div className="md:col-span-1 md:grid md:gid-row-4 md:grid-cols-1">
-          <div className="border rounded-md shadow-md p-5 m-3
-                          md:row-span-1">
+        {/*Leaves and Bar Chart */}
+        <div className="lg:col-span-1 lg:grid lg:gid-row-4 lg:grid-cols-1">
+          <div className="border rounded-lg shadow-lg p-5 m-3
+                          lg:row-span-1">
             <LeaveCredit />
           </div>
-          <div className="border rounded-md shadow-md p-5 m-3
-                          md:row-span-3">
-            <LineChart />
+          <div className="border rounded-lg shadow-lg p-5 m-3
+                          lg:row-span-3">
+            <BarChartComponent />
           </div>
         </div>
           

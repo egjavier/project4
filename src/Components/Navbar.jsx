@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import Search from "./Search"
 import Logout from './Logout'
+import HomeIcon from '@mui/icons-material/Home';
 
 function Navbar({isLoggedIn}) {
 
@@ -9,7 +10,7 @@ function Navbar({isLoggedIn}) {
       <div className="font-bold text-xl md:text-2xl text-white">
         <Link to={isLoggedIn ? "employeelist" : "/"}>
           {
-            !isLoggedIn ? 'LOGO' : 'HOME'
+            !isLoggedIn ? 'LOGO' : <HomeIcon />
           }
         </Link>
       </div>

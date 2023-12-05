@@ -10,13 +10,11 @@ function ContextProvider ({children}) {
 
   const [ search, setSearch ] = useState("")
   const [ employeeInfo, setEmployeeInfo ] = useState(inititalState)
-  const [ imgLink, setImgLink ] = useState("")
 
   return (
     <Context.Provider value={{
                               search, setSearch,
                               employeeInfo, setEmployeeInfo, 
-                              imgLink, setImgLink
                             }}>
       {children}
     </Context.Provider>
