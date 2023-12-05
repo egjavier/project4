@@ -29,7 +29,7 @@ function EmployeeCard() {
   }, [])
 
   const back = () => {
-    navigate('/employeelist', { replace: true })
+    navigate('/', { replace: true })
   }
 
   return (
