@@ -78,6 +78,7 @@ function EmployeeList() {
           color: "#297EA6",
         }) 
         readData()
+        navigate('/employeelist', {repalce: true})
       } else if (result.isDenied) {
         Toast.fire({
           width: '15rem',
