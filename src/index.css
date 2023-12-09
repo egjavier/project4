@@ -37,3 +37,8 @@ white: #ffffff
   font-weight: 700;
   font-size: 1.3em;
 }
+
+.MuiAvatar-root {
+  width: 100% !important;
+  height: 100% !important;
+}

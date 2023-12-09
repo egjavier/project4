@@ -1,25 +1,15 @@
-import { useState, useContext} from "react";
+import { useState, useEffect} from "react";
 import db from "../Components/FirebaseConfig";
 import { addDoc, collection} from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Swal from 'sweetalert2';
-import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import  Avatar from "@mui/material/Avatar";
 
 function AddEmployee({employee, setEmployee, readData}) {
 
-  //Upload Button Material UI
-  const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1,
-  });
+  AOS.init()
 
 // NEW EMPLOYEE STATES
   const [ lastname, setLastname ] = useState("")
@@ -32,6 +22,8 @@ function AddEmployee({employee, setEmployee, readData}) {
   const [ hireDate, setHireDate ] = useState("")
 
   const [ isAdding, setIsAdding ] = useState(false)
+  const [ img, setImg ] = useState("")
+  const [ imgLink, setImgLink ] = useState("")
 
 //MODAL
   const Toast = Swal.mixin({
@@ -49,7 +41,9 @@ function AddEmployee({employee, setEmployee, readData}) {
 // ADD NEW EMPLOYEE USING A FORM
 const handleSubmit =  async () => {
 
-  if (!firstname || !lastname || !email || !phone || !jobTitle || !department || !hireDate || !employmentStatus) {
+  if (!firstname || !lastname || !email || !phone ||
+     !jobTitle || !department || !hireDate || 
+     !employmentStatus ) {
     await Toast.fire({
       width: "15rem",
       title: "Missing Fields!",
@@ -64,7 +58,8 @@ const handleSubmit =  async () => {
         email,
         phone,
         employmentStatus,
-        hireDate
+        hireDate,
+        imgLink,
       }
       employee.push(newEmployee)
    
@@ -72,11 +67,11 @@ const handleSubmit =  async () => {
         addDoc(collection(db, "employeelist"), {
           ...newEmployee
         });
+        setEmployee(employee)
       } catch (err) {
         console.error(err)
       }
     
-      setEmployee(employee)
   
       setLastname("")
       setFirstname("")
@@ -86,9 +81,6 @@ const handleSubmit =  async () => {
       setDepartment("")
       setHireDate("")
       setEmploymentStatus("")
-
-      // firebase Storage
-      // handleUploadImage()
 
       Toast.fire({
         icon: "success",
@@ -120,24 +112,33 @@ const handleAdd =() => {
                         }>▼</div>
       </button>
       <div className= { !isAdding  ? "hidden"
-                                  : "px-5 pb-5 flex flex-col gap-2 duration-300"
+                                  : "px-5 pb-5 flex flex-col gap-2"
                       }>
         {/* upload image */}
         <hr />
-        <div className="text-center py-3">
-          <Button name="profileImage"
-                  id="profileImage" 
-                  component="label"
-                  variant="contained"
-                  startIcon={<CloudUploadIcon />}
-                  color="secondary"
-                  style={{
-                    fontSize: ".7rem"
-                  }}
-          > 
-            Upload Image
-            <VisuallyHiddenInput type="file" />
-          </Button>             
+        <div className="flex flex-col justify-center items-center gap-3 mb-5">
+          <div className="h-20 w-20 md:h-28 md:w-28 flex justify-center items-center">
+            {
+              imgLink === "" ? <Avatar className="avatar" />
+                             : <img src={imgLink}
+                                    name="img"
+                                    required
+                                    alt="Profile Picture"
+                                    className="rounded-full h-20 w-20 md:h-28 md:w-28 object-cover"
+                              />
+            }
+          </div>
+          <div className="">
+            <input  name="profileImage" id="profileImage" 
+                    type="file" 
+                    placeholder="Doe"
+                    defaultValue={img}
+                    onChange={e => setImg(e.target.files[0])}
+                    className="placeholder:italic placeholder:indent-2 
+                              border outline-neutral-700 rounded-sm
+                              text-xs md:text-sm indent-2 text-[#297EA6] py-1"
+            /> 
+          </div>
         </div>
         {/* name */}
         <div className="grid grid-cols-12 gap-2">
@@ -199,6 +200,7 @@ const handleAdd =() => {
           <label htmlFor="email" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6]">Email:</label>
           <input  name="email" id="email" 
                   type="email" 
+                  autoComplete="true"
                   placeholder="johndoe@domain.com"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
@@ -213,6 +215,7 @@ const handleAdd =() => {
                     type="number" 
                     placeholder="0987654321"
                     value={phone}
+                    autoComplete="true"
                     onChange={e => setPhone(Number(e.target.value))}
                     className="placeholder:italic placeholder:indent-2
                               border outline-neutral-700 rounded-sm w-full
@@ -253,7 +256,7 @@ const handleAdd =() => {
           <button onClick={handleSubmit}
                   className="bg-[#00101C] rounded-md px-5 py-1
                               hover:scale-105 duration-150
-                              text-white md:text-md ">
+                              text-white text-xs md:text-sm ">
             Submit
           </button>
           

@@ -1,7 +1,8 @@
 import db from "../Components/FirebaseConfig";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import Swal from 'sweetalert2'
+import ProfileImage from "../Images/profilePic.jpg"
 
 function EditEmployee({employee, setEmployee, readData, isEmployee, setIsUpdating}) {
 
@@ -15,7 +16,7 @@ function EditEmployee({employee, setEmployee, readData, isEmployee, setIsUpdatin
   const [ employmentStatus, setEmploymentStatus ] = useState(isEmployee.employmentStatus)
   const [ hireDate, setHireDate ] = useState(isEmployee.hireDate)
 
-   //MODAL
+  //MODAL
   const Toast = Swal.mixin({
     toast: true,
     position: 'center',
@@ -54,13 +55,13 @@ const handleUpdate = () => {
         email,
         phone,
         employmentStatus,
-        hireDate
+        hireDate,
       }
 
       try{
         setDoc(doc(db, "employeelist", isEmployee.id), {...emp})
-        readData()
         setEmployee(employee)
+        readData()
       } catch (err) {
         console.error(err)
       }
@@ -85,15 +86,26 @@ return (
     <hr />
     <div className="p-5 flex flex-col gap-2 duration-300">
     {/* upload image */}
-    <div>
-      <label htmlFor="profileImage" className="me-1 text-xs md:text-sm font-semibold text-[#297EA6]">Image: </label>
-      <input  name="profileImage" id="profileImage" 
-              type="file" 
-              placeholder="Doe"
-              className="placeholder:italic placeholder:indent-2 
-                        border outline-neutral-700 rounded-sm
-                        text-xs md:text-sm indent-2 text-[#297EA6] py-1"
-      />                
+    <div className="flex flex-col justify-center items-center gap-3 mb-5">
+      <div className="h-20 w-20 md:h-28 md:w-28 flex justify-center items-center">
+        <img  src={ProfileImage}
+              name="img"
+              required
+              alt="Profile Picture"
+              className="rounded-full h-20 w-20 md:h-28 md:w-28 object-cover"
+        />      
+      </div>
+      <div >
+        <input  name="profileImage" id="profileImage" 
+                type="file" 
+                placeholder="Doe"
+                // defaultValue={img}
+                // onChange={e => setImg(e.target.files[0])}
+                className="placeholder:italic placeholder:indent-2 
+                          border outline-neutral-700 rounded-sm
+                          text-xs md:text-sm indent-2 text-[#297EA6] py-1"
+        /> 
+      </div>
     </div>
     {/* name */}
     <div className="grid grid-cols-12 gap-2">
@@ -209,13 +221,13 @@ return (
       <button onClick={()=>{setIsUpdating(false)}}
               className="text-[#00101C] rounded-md px-5 py-1
                           hover:scale-105 duration-150 ring-2 ring-inset
-                         ring-[#00101C] md:text-md ">
+                         ring-[#00101C] text-xs md:text-sm ">
         Cancel
       </button>      
       <button onClick={handleUpdate}
             className="bg-[#00101C] rounded-md px-5 py-1
                         hover:scale-105 duration-150
-                        text-white md:text-md ">
+                        text-white text-xs md:text-sm ">
         Submit
       </button>
     </div>                   

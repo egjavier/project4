@@ -7,13 +7,20 @@ import Swal from 'sweetalert2'
 import { useOutletContext } from 'react-router-dom'
 import EmployeeList from './EmployeeList'
 import { TextField } from '@mui/material'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+
 
 function Login() {
 
   const isLoggedIn = useOutletContext()
-
+  
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const navigate = useNavigate();
   const redirect = () => {
@@ -103,18 +110,27 @@ function Login() {
                                           color="secondary"
                               />
                             </div>
-                            <div className="flex flex-col gap-2">
+                            <div className="flex flex-col gap-5">
                               <TextField  name="password" 
                                           id="password"
-                                          type="password"
+                                          label="Password"
+                                          type={showPassword ? 'text' : 'password'}
                                           required
                                           placeholder="••••••••••••••••"
                                           onChange={(e) => setPassword(e.target.value)}
                                           value={password}
-                                          label="Password"
                                           variant="standard"
                                           className="indent-2"
                                           color="secondary"
+                                          InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton onClick={handleClickShowPassword} edge="end">
+                                                        {!showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}                              
                               />
                             </div>
                             <button   onClick={handleLogin}

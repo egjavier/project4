@@ -9,7 +9,7 @@ function LeaveCredit() {
       <div className='flex justify-center items-center gap-5 mt-4'>
         {/* VACATION */}
         <div>
-          <p className='text-white bg-[#297EA6] rounded-full w-16 h-16
+          <p className='text-white bg-[#297EA6] rounded-full w-16 h-16 shadow-md shadow-black/60
                         flex justify-center items-center text-2xl font-bold tracking-wider'>
             40
           </p>
@@ -19,7 +19,7 @@ function LeaveCredit() {
         </div>
         {/* SICK */}
         <div>
-          <p className='text-white bg-[#297EA6] rounded-full w-16 h-16
+          <p className='text-white bg-[#297EA6] rounded-full w-16 h-16 shadow-md shadow-black/60
                         flex justify-center items-center text-2xl font-bold tracking-wider'>
             15
           </p>

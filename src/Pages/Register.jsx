@@ -8,6 +8,10 @@ import Swal from 'sweetalert2'
 import { useOutletContext } from 'react-router-dom'
 import EmployeeList from './EmployeeList'
 import { TextField } from '@mui/material'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
 
 function Register() {
 
@@ -17,6 +21,12 @@ function Register() {
   const [ password, setPassword ] = useState('')
   const [ confirmPassword, setConfirmPassword ] =  useState('')
   const [ username, setUsername ] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowConfirm = () => setShowConfirm((show) => !show);
+
+
 
   const navigate = useNavigate();
   const redirect = () => {
@@ -127,7 +137,7 @@ function Register() {
                             <div className="flex flex-col gap-2">
                               <TextField  name="password" 
                                           id="password"
-                                          type="password"
+                                          type={showPassword ? 'text' : 'password'}
                                           label="Password"
                                           required
                                           variant='standard'
@@ -136,12 +146,21 @@ function Register() {
                                           value={password}
                                           className="indent-2"
                                           color='secondary'
+                                          InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton onClick={handleClickShowPassword} edge="end">
+                                                        {!showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }} 
                               />
                             </div>
                             <div className="flex flex-col gap-2">
                               <TextField  name="confirmPassword" 
                                           id="confirmPassword"
-                                          type="password"
+                                          type={showConfirm ? 'text' : 'password'}
                                           label="Confirm Password"
                                           required
                                           variant='standard'                                          placeholder="••••••••••••••••"
@@ -149,6 +168,15 @@ function Register() {
                                           value={confirmPassword}
                                           className="indent-2"
                                           color='secondary'
+                                          InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton onClick={handleClickShowConfirm} edge="end">
+                                                        {!showConfirm ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }} 
                               />
                             </div>
                             <button   onClick={handleRegister}

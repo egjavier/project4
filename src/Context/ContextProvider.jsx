@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Context from './Context'
 
 function ContextProvider ({children}) {
-
+  
   const inititalState = () => {
     const emp = localStorage.getItem("employee")
     return emp ? JSON.parse(emp) : ""

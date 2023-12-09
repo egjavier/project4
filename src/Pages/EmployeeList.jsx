@@ -1,5 +1,4 @@
 import AddEmployee from "./AddEmployee"
-import profileImage from '../Images/profilePic.jpg'
 import db from "../Components/FirebaseConfig"
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore"
 import { useEffect, useState, useContext } from "react"
@@ -9,8 +8,11 @@ import Pagination from "../Components/Pagination"
 import Login from "./Login"
 import { useOutletContext, useNavigate } from "react-router-dom"
 import Context from "../Context/Context";
+import profileImage from "../Images/profilePic.jpg"
 
 function EmployeeList() {
+  const {search} = useContext(Context)
+  const {setEmployeeInfo} = useContext(Context)
 
   const [ isSortingName, setIsSortingName ] = useState(false)
   const [ isSortingJob, setIsSortingJob ] = useState(false)
@@ -20,11 +22,7 @@ function EmployeeList() {
   const [ employee, setEmployee ] = useState([])
 
   const [ isUpdating, setIsUpdating ] = useState(false)
-  const [ isEmployee, setIsEmployee ] = useState({})
-  
-  const {search} = useContext(Context)
-  const {setEmployeeInfo} = useContext(Context)
-  // const {imgLink} = useContext(Context)
+  const [ isEmployee, setIsEmployee ] = useState({})  
 
   const [ currentPage, setCurrentPage ] = useState(0)
   const [ usersPerPage, setUsersPerPage] = useState(10)
@@ -38,13 +36,13 @@ function EmployeeList() {
     const querySnapshot = await getDocs(collection(db, "employeelist"))
     const employees = querySnapshot.docs.map( e => ({...e.data(), id: e.id}))
     setEmployee(employees.sort((a, b) => a.lastname.localeCompare(b.lastname)))
+    setEmployeeInfo(employees)
   }
   useEffect (() => {
     readData()
   }, [])
 
-  setEmployeeInfo(employee)
-  //MODAL
+ //MODAL
   const Toast = Swal.mixin({
     toast: true,
     position: 'center',
@@ -59,7 +57,7 @@ function EmployeeList() {
 
   // DELETE EMPLOYEE
   const deleteEmployee = (id, firstname, lastname) => {
-    const param = doc(db, "employeelist", id)
+    const param = doc(db, "employeelist", id)    
     Swal.fire({    
       title: `Are you sure you want to delete ${firstname} ${lastname}'s data?`,
       showConfirmButton: true,
@@ -71,13 +69,17 @@ function EmployeeList() {
     }).then((result) => {
       if (result.isConfirmed) {
       deleteDoc(param)
+
         Toast.fire({
           icon: "success",
           iconColor: "#297EA6",
           title: `${firstname} ${lastname}'s data has been deleted!`,
           color: "#297EA6",
         }) 
+
         readData()
+
+      
       } else if (result.isDenied) {
         Toast.fire({
           width: '15rem',
@@ -88,6 +90,7 @@ function EmployeeList() {
     });
   }
 
+  //EDIT EMPLOYEE INFO
   const updateEmployee = (toUpdate) => {
     setIsEmployee(toUpdate)
     setIsUpdating(true)
@@ -135,6 +138,7 @@ function EmployeeList() {
     navigate(`/employeecard/:${e.id}`, { replace: true } )
     window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
   }
+
 
 
   return (
@@ -187,7 +191,8 @@ function EmployeeList() {
                               </thead>
                               <tbody>
                                 { //  MAP THROUGH THE EMPLOYEE ARRAY OF OBJECTS TO GET DATA
-                                  employee
+                                employee.length > 0 ?
+                                employee
                                   .filter(emp => {
                                     return (
                                       search === "" ? emp 
@@ -245,12 +250,19 @@ function EmployeeList() {
                                       </tr> 
                                     )
                                   })
-                                }        
+                                  :
+                                  <tr>
+                                    <td className="px-2s py-3 italic text-xs md:text-sm">No records</td>
+                                  </tr>
+                                }
                                   
                               </tbody>
                             </table>
+                            {
+                              employee.length > 10 &&
+                              <Pagination employee={employee} usersPerPage={usersPerPage} setCurrentPage={setCurrentPage} currentPage={{currentPage}}/> 
+                            }
                           </div>
-                          <Pagination employee={employee} usersPerPage={usersPerPage} setCurrentPage={setCurrentPage} currentPage={{currentPage}}/> 
                         </> 
                         :
                         <EditEmployee employee={employee} 
