@@ -75,23 +75,23 @@ Welcome to the Employee Management Dashboard! This tool is designed for administ
 # Achievements
 1. React Hooks
 
-Developed a strong understanding and proficiency in utilizing various React hooks for state management and enhancing component functionalities.
-Effectively employed hooks such as useState(), useEffect(), useContext(), useRef(), and more to streamline the development process.
+                  Developed a strong understanding and proficiency in utilizing various React hooks for state management and enhancing component functionalities.
+                  Effectively employed hooks such as useState(), useEffect(), useContext(), useRef(), and more to streamline the development process.
 
 
 2. CRUD Operations with Firebase
 
-Successfully implemented CRUD (Create, Read, Update, Delete) operations using Firebase.
-Leveraged Firebase Auth for secure user authentication and Firebase Database for efficient storage and retrieval of employee data.
+            Successfully implemented CRUD (Create, Read, Update, Delete) operations using Firebase.
+            Leveraged Firebase Auth for secure user authentication and Firebase Database for efficient storage and retrieval of employee data.
 
 
 3. Deepened Knowledge in Tailwind CSS
 
-Expanded expertise in Tailwind CSS for creating responsive and visually appealing web interfaces.
-Implemented Tailwind CSS to ensure a seamless and consistent user experience across various devices and screen sizes.
+                  Expanded expertise in Tailwind CSS for creating responsive and visually appealing web interfaces.
+                  Implemented Tailwind CSS to ensure a seamless and consistent user experience across various devices and screen sizes.
 
 
 4. Familiarity with Reading Documentation
 
-Developed a proficiency in reading and understanding documentation, a crucial skill in web development.
-Strengthened the ability to navigate and apply information from documentation for various technologies used in the project.
+                  Developed a proficiency in reading and understanding documentation, a crucial skill in web development.
+                  Strengthened the ability to navigate and apply information from documentation for various technologies used in the project.
