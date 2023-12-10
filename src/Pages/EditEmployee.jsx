@@ -1,8 +1,7 @@
 import db from "../Components/FirebaseConfig";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import Swal from 'sweetalert2'
-import ProfileImage from "../Images/profilePic.jpg"
 
 function EditEmployee({employee, setEmployee, readData, isEmployee, setIsUpdating}) {
 
@@ -15,6 +14,8 @@ function EditEmployee({employee, setEmployee, readData, isEmployee, setIsUpdatin
   const [ phone, setPhone ] = useState(isEmployee.phone)
   const [ employmentStatus, setEmploymentStatus ] = useState(isEmployee.employmentStatus)
   const [ hireDate, setHireDate ] = useState(isEmployee.hireDate)
+
+  const [ imgLink, setImgLink ] = useState(isEmployee.imgLink)
 
   //MODAL
   const Toast = Swal.mixin({
@@ -56,6 +57,7 @@ const handleUpdate = () => {
         phone,
         employmentStatus,
         hireDate,
+        imgLink
       }
 
       try{
@@ -73,7 +75,6 @@ const handleUpdate = () => {
         color: "#297EA6",
       }) 
     }
-
     setIsUpdating(false)
   });
 }
@@ -88,19 +89,16 @@ return (
     {/* upload image */}
     <div className="flex flex-col justify-center items-center gap-3 mb-5">
       <div className="h-20 w-20 md:h-28 md:w-28 flex justify-center items-center">
-        <img  src={ProfileImage}
+        <img  src={imgLink}
               name="img"
               required
               alt="Profile Picture"
               className="rounded-full h-20 w-20 md:h-28 md:w-28 object-cover"
         />      
       </div>
-      <div >
+      <div className="hidden">
         <input  name="profileImage" id="profileImage" 
                 type="file" 
-                placeholder="Doe"
-                // defaultValue={img}
-                // onChange={e => setImg(e.target.files[0])}
                 className="placeholder:italic placeholder:indent-2 
                           border outline-neutral-700 rounded-sm
                           text-xs md:text-sm indent-2 text-[#297EA6] py-1"

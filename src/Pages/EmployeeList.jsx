@@ -8,7 +8,6 @@ import Pagination from "../Components/Pagination"
 import Login from "./Login"
 import { useOutletContext, useNavigate } from "react-router-dom"
 import Context from "../Context/Context";
-import profileImage from "../Images/profilePic.jpg"
 
 function EmployeeList() {
   const {search} = useContext(Context)
@@ -139,8 +138,6 @@ function EmployeeList() {
     window.scrollTo({top: 0, left: 0, behavior: 'smooth'})
   }
 
-
-
   return (
     <section value={employee} className="max-w-[1000px] mx-auto">
       {
@@ -212,13 +209,15 @@ function EmployeeList() {
                                   .map(e => {
                                     return (
                                       <tr key={e.id}
-                                          className="text-xs md:text-sm text-[#f3f3f3]  cursor-pointer even:bg-[#00101C]/60 odd:bg-[#00101C]/70
+                                          className="text-xs md:text-sm text-[#f3f3f3] even:bg-[#00101C]/60 odd:bg-[#00101C]/70
                                                       hover:backdrop-blur-0 hover:bg-[#00101C]/40 duration-300">
                                         <td>
-                                          <div className="flex justify-center"><img src={profileImage} alt='Profile Picture' className="rounded-full object-cover w-10 h-10"/></div>
+                                          <div className="flex justify-center cursor-pointer">
+                                            <img src={e.imgLink} alt='Profile Picture' className="rounded-full object-cover w-10 h-10"/>
+                                          </div>
                                         </td>
                                         <td onClick={() => {handleEmployeeDetails(e)}}
-                                            className="text-start px-2 py-1 tracking-wide break-words
+                                            className="text-start px-2 py-1 tracking-wide break-words cursor-pointer
                                                       hover:scale-105 hover:font-bold hover:underline duration-150">
                                           {e.lastname}, {e.firstname}
                                         </td>
@@ -228,14 +227,14 @@ function EmployeeList() {
                                         <td className="hidden lg:table-cell text-start px-3 py-1 break-all">{e.phone}</td>
                                         <td className="table-cell text-start px-3">{e.employmentStatus}</td>
                                         <td className="flex justify-center items-center cursor-pointer h-[55px] px-3">
-                                          <div  className="me-1 hover:scale-125 duration-150 bg-[#00101C]/70 rounded-full p-1" 
+                                          <div  className="me-1 hover:scale-125 duration-150 bg-[#00101C]/70 rounded-full p-1 cursor-pointer" 
                                                 title="Edit"
                                                 onClick={() => {
                                                   updateEmployee(e)
                                                 }}>
                                             ✏️
                                           </div>
-                                          <div  className="hover:scale-125 duration-150 bg-[#00101C]/70 rounded-full p-1" 
+                                          <div  className="hover:scale-125 duration-150 bg-[#00101C]/70 rounded-full p-1 cursor-pointer" 
                                                 title="Delete"
                                                 onClick={() => {
                                                   deleteEmployee(
@@ -252,7 +251,7 @@ function EmployeeList() {
                                   })
                                   :
                                   <tr>
-                                    <td className="px-2s py-3 italic text-xs md:text-sm">No records</td>
+                                    <td className="px-2 py-3 italic text-xs md:text-sm">No records</td>
                                   </tr>
                                 }
                                   

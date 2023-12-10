@@ -10,7 +10,6 @@ import LineChartComponent from "../Components/Dashboard/LineChartComponent"
 import LeaveCredit from "../Components/Dashboard/LeaveCredit"
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import profileImage from "../Images/profilePic.jpg"
 
 function EmployeeCard() {
 
@@ -54,7 +53,7 @@ function EmployeeCard() {
             data-aos="fade-up"
             data-aos-duration="1000">
           <div className="flex justify-center items-center md:col-span-1">
-            <img  src={profileImage}
+            <img  src={data.imgLink}
                   alt="Profile Picture"
                   className="w-32 h-32 lg:w-40 lg:h-40 object-cover rounded-full 
                             text-center"

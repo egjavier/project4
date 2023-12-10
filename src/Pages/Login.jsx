@@ -51,9 +51,7 @@ function Login() {
             setEmail('')
             setPassword('')
             
-            console.log('logged in')
-
-            // REDIRECT TO EMPLOYEELIST PAGE ONE LOGGED IN
+           // REDIRECT TO EMPLOYEELIST PAGE ONE LOGGED IN
             navigate(("/employeelist"), {replace: true})
           })
           .catch((error) => {
