@@ -303,9 +303,9 @@ const handleAdd =() => {
               !isRunning  ? 
                             <button onClick={handleSubmit}
                                     className="bg-[#00101C] rounded-md px-5 py-1
-                                                hover:scale-105 duration-150
+                                                hover:scale-105 duration-150 font-semibold
                                                 text-white text-xs md:text-sm ">
-                              Button
+                              Submit
                             </button>
                           :
                             <button
