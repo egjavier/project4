@@ -95,3 +95,5 @@ Welcome to the Employee Management Dashboard! This tool is designed for administ
 
             Developed a proficiency in reading and understanding documentation, a crucial skill in web development.
             Strengthened the ability to navigate and apply information from documentation for various technologies used in the project.
+
+# LIVE: https://project4-employee-management-dashboard-83jm.vercel.app/
